@@ -20,7 +20,7 @@
     <body>
         <h1>Welcome to Your Profile!</h1>
          <%
-         String username = "";
+         String username = null;
          
          LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
          username = lg.getUsername();
