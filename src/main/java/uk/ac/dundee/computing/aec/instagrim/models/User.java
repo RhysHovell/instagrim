@@ -15,7 +15,8 @@ import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
-import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
+import uk.ac.dundee.computing.aec.instagrim.stores.*;
+
 
 /**
  *
@@ -26,9 +27,9 @@ public class User {
     public User(){
         
     }
-    
-    public boolean RegisterUser(String username, String Password){
-        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
+
+    public boolean RegisterUser(String username, String Password, String firstname){
+        AeSimpleSHA1 sha1handler= new AeSimpleSHA1();
         String EncodedPassword=null;
         try {
             EncodedPassword= sha1handler.SHA1(Password);
@@ -37,15 +38,47 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password) Values(?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password,first_name) Values(?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword));
-        //We are assuming this always works.  Also a transaction would be good here !
+        session.execute(boundStatement.bind(username,EncodedPassword,firstname));
+        //We are assuming this always works. Also a transaction would be good here !
         
+        session.close();
+     
         return true;
+    }
+    
+    public ProfileBean getUserInfo(ProfileBean profile, String username){
+       
+        Session session = cluster.connect("instagrim");
+        
+        String cqlQuery = "SELECT * FROM userprofiles WHERE username = ?"; 
+        PreparedStatement ps = session.prepare(cqlQuery);
+        BoundStatement bs = new BoundStatement(ps);
+        ResultSet rs = null;
+        rs = session.execute(bs.bind(username));
+        if (!rs.isExhausted()){
+            System.out.println("User not found");
+            return null;
+            
+        } else {
+            for(Row row : rs)
+            {
+                String login = row.getString("login");
+                String firstname = row.getString("first_name");
+//                String lastname = row.getString("lastname");
+//                String email = row.getString("email");
+                profile.setLogin(login);
+                profile.setFirstname(firstname);
+//                profile.setLastname(lastname);
+//                profile.setEmail(email);
+
+                
+                
+            }
+        }
+        return profile;
     }
     
     public boolean IsValidUser(String username, String Password){
@@ -61,9 +94,7 @@ public class User {
         PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
-        rs = session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username));
+        rs = session.execute(boundStatement.bind(username));
         if (rs.isExhausted()) {
             System.out.println("No Images returned");
             return false;
