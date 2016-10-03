@@ -20,13 +20,19 @@
     <body>
         <h1>Welcome to Your Profile!</h1>
          <%
-      java.util.LinkedList<ProfileBean> userInfo = (java.util.LinkedList<ProfileBean>) request.getAttribute("userInfo");
-         String userLog = user.getLogin();
-         String firstName = user.getFirstname();
-
+         String username = "";
+         
+         LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
+         username = lg.getUsername();
+         
+         ProfileBean profile = new ProfileBean();
+         profile = (ProfileBean) request.getAttribute("ProfileBean");
+         
         %>
-         <h2>Profile of: <%=userLog%></h2> 
-        <p>First Name:<%=firstName%></p>
+
+     
+         <h2>Profile of: <%=username%></h2> 
+        <p>First Name:<%=profile.getFirstname()%></p>
        
     </body>
 </html>
