@@ -18,16 +18,20 @@ import javax.servlet.http.HttpSession;
 public class Logout extends HttpServlet {
 @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)  
-                                throws ServletException, IOException {  
+                                throws ServletException, IOException {
             response.setContentType("text/html"); 
             PrintWriter out=response.getWriter();  
-              
+            
             request.getRequestDispatcher("index.jsp").include(request, response);  
             
             HttpSession session=request.getSession();  
             session.invalidate();  
             
-            out.print("You are successfully logged out!");
+            
+            
+            response.sendRedirect("index.jsp");
+            
+            out.print("You were successfully logged out!");
             
             out.close();
     }  
