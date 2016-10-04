@@ -5,21 +5,17 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.stores;
 
-import com.datastax.driver.core.utils.Bytes;
-import java.nio.ByteBuffer;
+
 /**
  *
  * @author Rhys
  */
 public class ProfileBean {
     private String login = null;
-    private String first_name = null;
-    private String last_name = null;
+    private String firstname = null;
+    private String lastname = null;
     private String Email = null;
-    private ByteBuffer pImage = null;
-    private int length;
-    private String type;
-    private java.util.UUID UUID = null;
+
   
     public void ProfileBean(){
     
@@ -30,17 +26,17 @@ public class ProfileBean {
     public String getLogin(){
         return login;
     }
-    public void setFirstname(String firstName){
-        this.first_name = firstName;
+    public void setFirstName(String firstname){
+        this.firstname = firstname;
     }
-    public String getFirstname(){
-        return first_name;
+    public String getFirstName(){
+        return firstname;
     }
-    public void setLastname(String lastName){
-        this.last_name = lastName;
+    public void setLastname(String lastname){
+        this.lastname = lastname;
     }
-    public String getLastname(){
-        return last_name;
+    public String getLastName(){
+        return lastname;
     }
     public void setEmail(String Email){
         this.Email = Email;
@@ -48,32 +44,5 @@ public class ProfileBean {
     public String getEmail(){
         return Email;
     }
-    public void setUUID(java.util.UUID UUID){
-        this.UUID = UUID;
-    }
-    public String getUUID(){
-        return UUID.toString();
-    }
-    public void setProfilePic(ByteBuffer pImage, int length, String type)
-    {
-        this.pImage = pImage;
-        this.length = length;
-        this.type = type;
-    }
-    public ByteBuffer getBuffer(){
-        return pImage;
-    }
-    public int getLength(){
-        return length;
-    }
-    public String getType(){
-        return type;
-    }
-    public byte[] getBytes(){
-        byte image[] = Bytes.getArray(pImage);
-        return image;
-    }
-
-    
     
 }

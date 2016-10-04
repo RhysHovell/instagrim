@@ -44,6 +44,7 @@ public class User {
         session.execute(boundStatement.bind(username,EncodedPassword,firstname));
         //We are assuming this always works. Also a transaction would be good here !
         
+        
         session.close();
      
         return true;
@@ -53,31 +54,26 @@ public class User {
        
         Session session = cluster.connect("instagrim");
         
-        String cqlQuery = "SELECT * FROM userprofiles WHERE username = ?"; 
+        String cqlQuery = "select * from userprofiles where login =?"; 
         PreparedStatement ps = session.prepare(cqlQuery);
-        BoundStatement bs = new BoundStatement(ps);
         ResultSet rs = null;
+        BoundStatement bs = new BoundStatement(ps);
+       
         rs = session.execute(bs.bind(username));
-        if (!rs.isExhausted()){
-            System.out.println("User not found");
-            return null;
-            
-        } else {
-            for(Row row : rs)
-            {
-                String login = row.getString("login");
-                String firstname = row.getString("first_name");
+        if (rs.isExhausted()){
+            System.out.println("User Not Found"); 
+        }
+        else{
+            for(Row row : rs){
+                profile.setLogin(row.getString("login"));
+                profile.setFirstName(row.getString("first_name"));
 //                String lastname = row.getString("lastname");
 //                String email = row.getString("email");
-                profile.setLogin(login);
-                profile.setFirstname(firstname);
 //                profile.setLastname(lastname);
-//                profile.setEmail(email);
-
-                
-                
+//                profile.setEmail(email); 
             }
         }
+        
         return profile;
     }
     

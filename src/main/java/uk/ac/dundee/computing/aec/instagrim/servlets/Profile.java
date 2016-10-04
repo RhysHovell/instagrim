@@ -36,6 +36,7 @@ public class Profile extends HttpServlet {
     
     Cluster cluster=null;
             
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -85,6 +86,7 @@ public class Profile extends HttpServlet {
         profile = user.getUserInfo(profile, lg.getUsername());
         request.setAttribute("Profile", profile);
         
+       
         RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
         
         rd.forward(request, response);

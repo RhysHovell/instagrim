@@ -20,19 +20,24 @@
     <body>
         <h1>Welcome to Your Profile!</h1>
          <%
+         
          String username = null;
          
-         LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
+         LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
          username = lg.getUsername();
          
          ProfileBean profile = new ProfileBean();
-         profile = (ProfileBean) request.getAttribute("ProfileBean");
+         profile = (ProfileBean) request.getAttribute("Profile");
          
-        %>
+//         if(profile != null)
+//         {
+//        %>
 
      
-         <h2>Profile of: <%=username%></h2> 
-        <p>First Name:<%=profile.getFirstname()%></p>
-       
+        <h2>Profile of:<%=username%> </h2> 
+        <p>First Name:<%=profile.getFirstName()%></p>
+        <% // }
+        
+        %>
     </body>
 </html>
