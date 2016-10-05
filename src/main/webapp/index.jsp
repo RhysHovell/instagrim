@@ -53,17 +53,15 @@
                                     String UserName = lg.getUsername();
                                     if (lg.getLoggedin()) {
                             %>
-
+                            
                             <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
+                            <li><a href="Logout">Logout</a></li>
                             <%}
                                     }else{
                                         %>
                             <li><a href="register.jsp">Register</a></li>
-                        <%
-
-
-                            }%>
-                            <li><a href="Logout">Logout</a><li>
+                        
+                            
                             <li><a href="userprofile.jsp">Profile</a></li>
                             <li><a href="search.jsp"><span class="glyphicon glyphicon-search"></span></a></li>
                         </ul>
@@ -71,6 +69,8 @@
                             <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                         </ul>
                             </div>
+                            <%
+                            }%>
                  </div>
             </div>
 
