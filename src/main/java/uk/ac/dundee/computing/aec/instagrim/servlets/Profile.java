@@ -74,7 +74,7 @@ public class Profile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       // processRequest(request, response);
         
         HttpSession session=request.getSession();
         LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
@@ -85,6 +85,7 @@ public class Profile extends HttpServlet {
         
         profile = user.getUserInfo(profile, lg.getUsername());
         request.setAttribute("Profile", profile);
+        
         
        
         RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");

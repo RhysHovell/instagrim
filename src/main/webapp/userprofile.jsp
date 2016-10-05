@@ -29,14 +29,16 @@
          ProfileBean profile = new ProfileBean();
          profile = (ProfileBean) request.getAttribute("Profile");
          
-//         if(profile != null)
-//         {
-//        %>
+         if(profile != null)
+         {
+        %>
 
      
         <h2>Profile of:<%=username%> </h2> 
         <p>First Name:<%=profile.getFirstName()%></p>
-        <% // }
+        <p>Surname:<%=profile.getLastName()%></p>
+        <p>Email:<%=profile.getEmail()%></p>
+        <%  }
         
         %>
     </body>

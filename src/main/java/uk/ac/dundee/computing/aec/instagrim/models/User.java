@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uk.ac.dundee.computing.aec.instagrim.models;
 
 import com.datastax.driver.core.BoundStatement;
@@ -17,72 +16,67 @@ import java.security.NoSuchAlgorithmException;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
 import uk.ac.dundee.computing.aec.instagrim.stores.*;
 
-
 /**
  *
  * @author Administrator
  */
 public class User {
+
     Cluster cluster;
-    public User(){
-        
+
+    public User() {
+
     }
 
-    public boolean RegisterUser(String username, String Password, String firstname){
-        AeSimpleSHA1 sha1handler= new AeSimpleSHA1();
-        String EncodedPassword=null;
+    public boolean RegisterUser(String username, String Password, String firstname) {
+        AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
+        String EncodedPassword = null;
         try {
-            EncodedPassword= sha1handler.SHA1(Password);
-        }catch (UnsupportedEncodingException | NoSuchAlgorithmException et){
+            EncodedPassword = sha1handler.SHA1(Password);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException et) {
             System.out.println("Can't check your password");
             return false;
         }
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("insert into userprofiles (login,password,first_name) Values(?,?,?)");
-       
+
         BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute(boundStatement.bind(username,EncodedPassword,firstname));
+        session.execute(boundStatement.bind(username, EncodedPassword, firstname));
         //We are assuming this always works. Also a transaction would be good here !
-        
-        
+
         session.close();
-     
+
         return true;
     }
-    
-    public ProfileBean getUserInfo(ProfileBean profile, String username){
-       
+
+    public ProfileBean getUserInfo(ProfileBean profile, String username) {
+
         Session session = cluster.connect("instagrim");
-        
-        String cqlQuery = "select * from userprofiles where login =?"; 
+
+        String cqlQuery = "select * from userprofiles where login=?";
         PreparedStatement ps = session.prepare(cqlQuery);
         ResultSet rs = null;
         BoundStatement bs = new BoundStatement(ps);
-       
         rs = session.execute(bs.bind(username));
-        if (rs.isExhausted()){
-            System.out.println("User Not Found"); 
-        }
-        else{
-            for(Row row : rs){
-                profile.setLogin(row.getString("login"));
-                profile.setFirstName(row.getString("first_name"));
+
+        Row row = rs.one();
+
+        profile.setLogin(row.getString("login"));
+        profile.setFirstName(row.getString("first_name"));
 //                String lastname = row.getString("lastname");
 //                String email = row.getString("email");
 //                profile.setLastname(lastname);
 //                profile.setEmail(email); 
-            }
-        }
-        
+
         return profile;
     }
-    
-    public boolean IsValidUser(String username, String Password){
-        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
-        String EncodedPassword=null;
+
+    public boolean IsValidUser(String username, String Password) {
+        AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
+        String EncodedPassword = null;
         try {
-            EncodedPassword= sha1handler.SHA1(Password);
-        }catch (UnsupportedEncodingException | NoSuchAlgorithmException et){
+            EncodedPassword = sha1handler.SHA1(Password);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException et) {
             System.out.println("Can't check your password");
             return false;
         }
@@ -96,19 +90,19 @@ public class User {
             return false;
         } else {
             for (Row row : rs) {
-               
+
                 String StoredPass = row.getString("password");
-                if (StoredPass.compareTo(EncodedPassword) == 0)
+                if (StoredPass.compareTo(EncodedPassword) == 0) {
                     return true;
+                }
             }
         }
-   
-    
-    return false;  
+
+        return false;
     }
-       public void setCluster(Cluster cluster) {
+
+    public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
 
-    
 }
