@@ -78,21 +78,9 @@ public class User {
         return profile;
         
     }
-    public boolean getUserInfoToUpdate(String username) {
 
-        Session session = cluster.connect("instagrim");
-
-        String cqlQuery = "select * from userprofiles where login=?";
-        PreparedStatement ps = session.prepare(cqlQuery);
-        ResultSet rs = null;
-        BoundStatement bs = new BoundStatement(ps);
-        rs = session.execute(bs.bind(username));
-        
-       return true;
-        
-    }
     public boolean updateUserDetails(String username, String firstname, String lastname, String email){
-        Session session = cluster.connect("instangrim");
+        Session session = cluster.connect("instagrim");
         String cqlQuery = "update userprofiles set first_name=?,last_name=?,email=? where login =?";
         
         PreparedStatement ps = session.prepare(cqlQuery);

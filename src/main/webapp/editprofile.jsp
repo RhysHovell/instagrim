@@ -10,20 +10,10 @@
 <html>
     <head>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="Styles.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Profile</title>
-        <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color: #125688;
-    }
-    .li {
-      color: whitesmoke;
         
-    }
-    </style>
     </head>
     <body>
         <h1>Edit your profile</h1>
@@ -48,11 +38,14 @@
                      </button>
                      <a class="navbar-brand" href="index.jsp">Instagrim</a>
                  </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
+                    
 
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Logout">Logout</a></li>
                             </ul>
+            </div>
+        </nav>
+                            
                             <form method ="POST" action="EditProfile">  
                                 <ul>
                                 <li>Profile of:<%=username%></li>

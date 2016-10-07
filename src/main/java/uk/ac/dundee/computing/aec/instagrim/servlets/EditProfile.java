@@ -8,7 +8,11 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
+import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletConfig;
@@ -18,9 +22,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;     
 
 /**
@@ -75,15 +81,31 @@ public class EditProfile extends HttpServlet {
             throws ServletException, IOException {
         
         String args[] = Convertors.SplitRequestPath(request);
-        String user = args[2];
-        
-        User us = new User();
 
-        us.getUserInfoToUpdate(user);
+
+        getUserInfoToUpdate(request,response);
               
     }
     
+    protected void getUserInfoToUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            
+            HttpSession session=request.getSession();
+            LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
+            
+            User user = new User();
+            user.setCluster(cluster);
+            ProfileBean profile = new ProfileBean();
 
+            profile = user.getUserInfo(profile, lg.getUsername());
+            request.setAttribute("Profile", profile);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/editprofile.jsp");
+
+            rd.forward(request, response);
+         
+ 
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -97,14 +119,14 @@ public class EditProfile extends HttpServlet {
             throws ServletException, IOException {
         
             String username=request.getParameter("login");
-            String firstName=request.getParameter("first_name");
-            String lastName=request.getParameter("last_name");
+            String firstname=request.getParameter("first_name");
+            String lastname=request.getParameter("last_name");
             String email=request.getParameter("email");
             
             User user = new User();
             user.setCluster(cluster);
-            user.updateUserDetails(username, firstName, lastName, email);
-            response.sendRedirect("/Instagrim/Profile/"+username);
+            user.updateUserDetails(username, firstname, lastname, email);
+            response.sendRedirect("index.jsp");
     }
 
     /**

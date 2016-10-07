@@ -8,9 +8,12 @@ and open the template in the editor.
     Author     : Administrator
 */
 
-
-nav {
-    text-align: left;
-    border: 2px;
-    float: right;
-}
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: #125688;
+    }
+    .li {
+      color: whitesmoke;
+        
+    }

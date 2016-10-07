@@ -15,6 +15,7 @@
         
       
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="Styles.css" >
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
            <style>
@@ -45,7 +46,7 @@
                      <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             
-                            <li><a href="upload.jsp">Upload</a></li>
+                            <li><a href="Image">Upload</a></li>
                             <%
 
                                 LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
@@ -53,20 +54,20 @@
                                     String UserName = lg.getUsername();
                                     if (lg.getLoggedin()) {
                             %>
-                            
-                            <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
+                            <li><a href="Profile">Profile</a></li>
+                            <li><a href="Images<%=lg.getUsername()%>">Your Images</a></li>
                             <li><a href="Logout">Logout</a></li>
                             <%}
                                     }else{
                                         %>
-                            <li><a href="register.jsp">Register</a></li>
+                            <li><a href="Register">Register</a></li>
                         
                             
-                            <li><a href="userprofile.jsp">Profile</a></li>
-                            <li><a href="search.jsp"><span class="glyphicon glyphicon-search"></span></a></li>
+                            
+                            <li><a href="Search"><span class="glyphicon glyphicon-search"></span></a></li>
                         </ul>
                             <ul class="nav navbar-nav navbar-right">
-                            <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                         </ul>
                             </div>
                             <%

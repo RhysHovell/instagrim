@@ -32,7 +32,11 @@ public class Register extends HttpServlet {
         cluster = CassandraHosts.getCluster();
     }
 
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+        rd.forward(request, response);
+    }
 
 
     /**
@@ -49,8 +53,8 @@ public class Register extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         String firstName=request.getParameter("first_name");
-        String lastname=request.getParameter("lastName");
-        String email=request.getParameter("Email");
+        String lastname=request.getParameter("last_name");
+        String email=request.getParameter("email");
         
         User us=new User();
         us.setCluster(cluster);

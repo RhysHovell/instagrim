@@ -15,6 +15,7 @@
     <head>
       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="Styles.css">
         <title>User Profile</title>
     </head>
     <body>
@@ -32,7 +33,7 @@
          if(profile != null)
          {
         %>
-        <li><a href="editprofile.jsp">Edit Profile</a></li>
+        <li><a href="EditProfile">Edit Profile</a></li>
 
      
         <h2>Profile of:<%=username%> </h2> 

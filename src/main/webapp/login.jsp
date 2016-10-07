@@ -32,7 +32,7 @@
                     <li>User Name <input type="text" name="username"></li>
                     <li>Password <input type="password" name="password"></li>
                 </ul>
-                <input type="submit" value="Login"> 
+            <input type="submit" value="Login"> 
             </form>
 
         </article>
