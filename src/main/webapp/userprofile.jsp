@@ -32,6 +32,7 @@
          if(profile != null)
          {
         %>
+        <li><a href="editprofile.jsp">Edit Profile</a></li>
 
      
         <h2>Profile of:<%=username%> </h2> 

@@ -49,12 +49,12 @@ public class Register extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         String firstName=request.getParameter("first_name");
-//        String lastname=request.getParameter("lastName");
-//        String email=request.getParameter("Email");
+        String lastname=request.getParameter("lastName");
+        String email=request.getParameter("Email");
         
         User us=new User();
         us.setCluster(cluster);
-        us.RegisterUser(username, password, firstName);
+        us.RegisterUser(username, password, firstName,lastname,email);
         
 	response.sendRedirect("index.jsp");
         

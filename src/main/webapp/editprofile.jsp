@@ -1,0 +1,68 @@
+<%-- 
+    Document   : editprofile
+    Created on : 07-Oct-2016, 16:22:04
+    Author     : rhysh
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Edit Profile</title>
+        <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: #125688;
+    }
+    .li {
+      color: whitesmoke;
+        
+    }
+    </style>
+    </head>
+    <body>
+        <h1>Edit your profile</h1>
+        <%
+            String username = null;
+            
+            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+            username = lg.getUsername();
+
+            ProfileBean profile = new ProfileBean();
+            profile = (ProfileBean) request.getAttribute("Profile");
+            
+        %>
+        
+        <nav class ="navbar navbar-inverse">
+            <div class="container-fluid">
+                 <div class="navbar-header">
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>
+                     <a class="navbar-brand" href="index.jsp">Instagrim</a>
+                 </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+
+                            <ul class="nav navbar-nav navbar-right">
+                            <li><a href="Logout">Logout</a></li>
+                            </ul>
+                            <form method ="POST" action="EditProfile">  
+                                <ul>
+                                <li>Profile of:<%=username%></li>
+                                <li>First Name:<input type="text"name="first_name" value = "<%=profile.getFirstName()%>"</li>
+                                <li>Surname:<input type="text"name="last_name" value = "<%=profile.getLastName()%>"</li>
+                                <li>Email:<input type="text"name="email" value = "<%=profile.getEmail()%>"</li>
+                                </ul>
+                                <input type ="submit" value="Update">
+                            </form>
+           
+
+    </body>
+</html>

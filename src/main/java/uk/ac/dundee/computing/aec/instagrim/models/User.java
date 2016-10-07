@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,7 +29,7 @@ public class User {
 
     }
 
-    public boolean RegisterUser(String username, String Password, String firstname) {
+    public boolean RegisterUser(String username, String Password, String firstname, String lastname, String email) {
         AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
         String EncodedPassword = null;
         try {
@@ -38,10 +39,10 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password,first_name) Values(?,?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password,first_name, last_name, email) Values(?,?,?,?,?)");
 
         BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute(boundStatement.bind(username, EncodedPassword, firstname));
+        session.execute(boundStatement.bind(username, EncodedPassword, firstname, lastname, email));
         //We are assuming this always works. Also a transaction would be good here !
 
         session.close();
@@ -58,17 +59,47 @@ public class User {
         ResultSet rs = null;
         BoundStatement bs = new BoundStatement(ps);
         rs = session.execute(bs.bind(username));
-
-        Row row = rs.one();
-
-        profile.setLogin(row.getString("login"));
-        profile.setFirstName(row.getString("first_name"));
-//                String lastname = row.getString("lastname");
-//                String email = row.getString("email");
-//                profile.setLastname(lastname);
-//                profile.setEmail(email); 
-
+        
+        if(rs.isExhausted()){
+            System.out.println("Profile not found");
+        }
+        else
+        {
+            for (Row row : rs){
+            profile.setLogin(row.getString("login"));
+            profile.setFirstName(row.getString("first_name"));
+            String lastname = row.getString("last_name");
+            String email = row.getString("email");
+            profile.setLastName(lastname);
+            profile.setEmail(email); 
+        }
+      
+        }
         return profile;
+        
+    }
+    public boolean getUserInfoToUpdate(String username) {
+
+        Session session = cluster.connect("instagrim");
+
+        String cqlQuery = "select * from userprofiles where login=?";
+        PreparedStatement ps = session.prepare(cqlQuery);
+        ResultSet rs = null;
+        BoundStatement bs = new BoundStatement(ps);
+        rs = session.execute(bs.bind(username));
+        
+       return true;
+        
+    }
+    public boolean updateUserDetails(String username, String firstname, String lastname, String email){
+        Session session = cluster.connect("instangrim");
+        String cqlQuery = "update userprofiles set first_name=?,last_name=?,email=? where login =?";
+        
+        PreparedStatement ps = session.prepare(cqlQuery);
+        BoundStatement bs = new BoundStatement(ps);
+        session.execute(bs.bind(username,firstname,lastname,email));
+        
+        return true;
     }
 
     public boolean IsValidUser(String username, String Password) {

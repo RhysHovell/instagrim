@@ -32,7 +32,7 @@ public class ProfileBean {
     public String getFirstName(){
         return firstname;
     }
-    public void setLastname(String lastname){
+    public void setLastName(String lastname){
         this.lastname = lastname;
     }
     public String getLastName(){
