@@ -80,10 +80,8 @@ public class EditProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String args[] = Convertors.SplitRequestPath(request);
 
-
-        getUserInfoToUpdate(request,response);
+             getUserInfoToUpdate(request,response);
               
     }
     
@@ -98,8 +96,9 @@ public class EditProfile extends HttpServlet {
             ProfileBean profile = new ProfileBean();
 
             profile = user.getUserInfo(profile, lg.getUsername());
+            
+            
             request.setAttribute("Profile", profile);
-
             RequestDispatcher rd = request.getRequestDispatcher("/editprofile.jsp");
 
             rd.forward(request, response);
@@ -126,7 +125,7 @@ public class EditProfile extends HttpServlet {
             User user = new User();
             user.setCluster(cluster);
             user.updateUserDetails(username, firstname, lastname, email);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("Profile");
     }
 
     /**
