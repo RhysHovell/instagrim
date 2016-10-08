@@ -79,13 +79,13 @@ public class EditProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+ 
             
-            getUserInfoToUpdate(user,request,response);
+            getUserInfoToUpdate(request,response);
               
     }
     
-    protected void getUserInfoToUpdate(String user, HttpServletRequest request, HttpServletResponse response)
+    protected void getUserInfoToUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
             HttpSession session=request.getSession();
