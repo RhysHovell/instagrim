@@ -18,8 +18,7 @@
     <body>
         <h1>Edit your profile</h1>
         <%
-            String username = null;
-            
+            String username;
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
             username = lg.getUsername();
 
@@ -45,7 +44,9 @@
                             </ul>
             </div>
         </nav>
-                            
+                   <%
+                       if (profile != null){
+                            %>
                             <form method ="POST" action="EditProfile">  
                                 <ul>
                                 <li>Profile of:<%=username%></li>
@@ -55,6 +56,9 @@
                                 </ul>
                                 <input type ="submit" value="Update">
                             </form>
+                                <% 
+                                 }
+                                %>
            
 
     </body>

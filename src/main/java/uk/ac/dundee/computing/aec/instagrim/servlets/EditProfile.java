@@ -122,12 +122,13 @@ public class EditProfile extends HttpServlet {
             String lastname=request.getParameter("last_name");
             String email=request.getParameter("email");
             
-            System.out.println("firstname" + firstname);
+            
             
             User user = new User();
             user.setCluster(cluster);
             user.updateUserDetails(username, firstname, lastname, email);
-            response.sendRedirect("Profile");
+            response.sendRedirect("index.jsp");
+            System.out.println("firstname" + firstname);
     }
 
     /**

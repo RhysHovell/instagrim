@@ -5,6 +5,8 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.stores;
 
+import java.nio.ByteBuffer;
+
 
 /**
  *
@@ -14,7 +16,10 @@ public class ProfileBean {
     private String login = null;
     private String firstname = null;
     private String lastname = null;
-    private String Email = null;
+    private String Email = null;private ByteBuffer bImage = null;
+    private int length;
+    private String type;
+    private java.util.UUID UUID=null;
 
   
     public void ProfileBean(){
