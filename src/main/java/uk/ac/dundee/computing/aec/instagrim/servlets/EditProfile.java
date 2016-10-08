@@ -80,27 +80,27 @@ public class EditProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-
-             getUserInfoToUpdate(request,response);
+            
+            getUserInfoToUpdate(user,request,response);
               
     }
     
-    protected void getUserInfoToUpdate(HttpServletRequest request, HttpServletResponse response)
+    protected void getUserInfoToUpdate(String user, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
             HttpSession session=request.getSession();
             LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
             
-            User user = new User();
-            user.setCluster(cluster);
+            User us = new User();
+            us.setCluster(cluster);
             ProfileBean profile = new ProfileBean();
 
-            profile = user.getUserInfo(profile, lg.getUsername());
+            profile = us.getUserInfo(profile, lg.getUsername());
             
             
             request.setAttribute("Profile", profile);
-            RequestDispatcher rd = request.getRequestDispatcher("/editprofile.jsp");
-
+            RequestDispatcher rd = request.getRequestDispatcher("editprofile.jsp");
+            
             rd.forward(request, response);
          
  
@@ -121,6 +121,8 @@ public class EditProfile extends HttpServlet {
             String firstname=request.getParameter("first_name");
             String lastname=request.getParameter("last_name");
             String email=request.getParameter("email");
+            
+            System.out.println("firstname" + firstname);
             
             User user = new User();
             user.setCluster(cluster);

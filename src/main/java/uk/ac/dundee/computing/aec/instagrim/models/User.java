@@ -81,7 +81,7 @@ public class User {
 
     public boolean updateUserDetails(String username, String firstname, String lastname, String email){
         Session session = cluster.connect("instagrim");
-        String cqlQuery = "update userprofiles set first_name=?,last_name=?,email=? where login =?";
+        String cqlQuery = ("update userprofiles set first_name=?,last_name=?,email=? where login =?");
         
         PreparedStatement ps = session.prepare(cqlQuery);
         BoundStatement bs = new BoundStatement(ps);
