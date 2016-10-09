@@ -56,11 +56,13 @@
         </nav>
         
 
-     
-        <h2>Profile of:<%=username%> </h2> 
-        <p>First Name:<%=profile.getFirstName()%></p>
-        <p>Surname:<%=profile.getLastName()%></p>
-        <p>Email:<%=profile.getEmail()%></p>
+    <ul>
+        <li>Profile of:<%=username%> </li> 
+        <li>First Name:<%=profile.getFirstName()%></li>
+        <li>Surname:<%=profile.getLastName()%></li>
+        <li>Email:<%=profile.getEmail()%></li>
+        
+    </ul>
         
         <li><a href="EditProfile">Edit Profile</a></li>
         <%  }
