@@ -15,11 +15,11 @@
     <head>
       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="Styles.css">
         <title>User Profile</title>
     </head>
     <body>
-        <h1>Welcome to Your Profile!</h1>
          <%
          
          String username = null;
@@ -33,13 +33,35 @@
          if(profile != null)
          {
         %>
-        <li><a href="EditProfile">Edit Profile</a></li>
+         <nav class ="navbar navbar-inverse">
+            <div class="container-fluid">
+                 <div class="navbar-header">
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>
+                     <a class="navbar-brand" href="index.jsp">Instagrim</a>
+                 </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="Profile">Profile</a></li>
+                            <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
+                            <ul class="nav navbar-nav navbar-right">
+                            <li><a href="Logout">Logout</a></li>
+                            </ul>
+                        </ul>
+            </div>
+        </nav>
+        
 
      
         <h2>Profile of:<%=username%> </h2> 
         <p>First Name:<%=profile.getFirstName()%></p>
         <p>Surname:<%=profile.getLastName()%></p>
         <p>Email:<%=profile.getEmail()%></p>
+        
+        <li><a href="EditProfile">Edit Profile</a></li>
         <%  }
         
         %>

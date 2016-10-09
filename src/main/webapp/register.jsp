@@ -9,23 +9,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="Styles.css" >
+        <title>Register</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="Styles.css">
     </head>
     <body>
-        <header>
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
-        </header>
-        <nav>
-            <ul>
-                
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
+        <body>
+        <nav class ="navbar navbar-inverse">
+            <div class="container-fluid">
+                 <div class="navbar-header">
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>
+                     <a class="navbar-brand" href="index.jsp">Instagrim</a>
+                 </div>
+                     <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+
+                            <li><a href="Search"><span class="glyphicon glyphicon-search"></span></a></li>
+                        </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                            <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        </ul>
+                            </div>
+
+                 </div>
+
         </nav>
-       
-        <article>
             <h3>Register as user</h3>
             <form method="POST"  action="Register">
                 <ul>
@@ -36,13 +48,6 @@
                     <li>Email<input type="text" name ="email"></li>
                 </ul>
                 <input type="submit" value="Register">
-            </form>
-
-        </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
+            </form> 
     </body>
 </html>

@@ -46,28 +46,28 @@
                      <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             
-                            <li><a href="Image">Upload</a></li>
+                           
                             <%
+
 
                                 LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                                 if (lg != null) {
-                                    String UserName = lg.getUsername();
+                                    String username = lg.getUsername();
                                     if (lg.getLoggedin()) {
                             %>
                             <li><a href="Profile">Profile</a></li>
-                            <li><a href="Images<%=lg.getUsername()%>">Your Images</a></li>
+                            <li><a href="upload.jsp">Upload</a></li>
+                            <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <li><a href="Logout">Logout</a></li>
                             <%}
                                     }else{
                                         %>
-                            <li><a href="Register">Register</a></li>
-                        
-                            
                             
                             <li><a href="Search"><span class="glyphicon glyphicon-search"></span></a></li>
                         </ul>
                             <ul class="nav navbar-nav navbar-right">
-                            <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li><a href="Register">Register</a></li>
+                            <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span>    Login</a></li>
                         </ul>
                             </div>
                             <%

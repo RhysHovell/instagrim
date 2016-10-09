@@ -57,9 +57,11 @@ public class Image extends HttpServlet {
         CommandsMap.put("Image", 1);
         CommandsMap.put("Images", 2);
         CommandsMap.put("Thumb", 3);
+        CommandsMap.put("ProfilePic",4);
 
     }
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -69,7 +71,8 @@ public class Image extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
         int command;
@@ -93,6 +96,7 @@ public class Image extends HttpServlet {
                 error("Bad Operator", response);
         }
     }
+
 
     private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
@@ -163,6 +167,5 @@ public class Image extends HttpServlet {
         out.println("<h1>You have an error in your input</h1>");
         out.println("<h2>" + mess + "</h2>");
         out.close();
-        return;
     }
 }

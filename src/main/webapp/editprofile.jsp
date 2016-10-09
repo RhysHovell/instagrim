@@ -16,7 +16,7 @@
         
     </head>
     <body>
-        <h1>Edit your profile</h1>
+
         <%
             String username = null;
             
@@ -38,14 +38,17 @@
                      </button>
                      <a class="navbar-brand" href="index.jsp">Instagrim</a>
                  </div>
-                    
-
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="Profile">Profile</a></li>
+                            <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Logout">Logout</a></li>
                             </ul>
+                        </ul>
             </div>
         </nav>
-                            
+                            <h1>Edit your profile</h1>
                             <form method ="POST" action="EditProfile">  
                                 <ul>
                                 <li>Profile of:<%=username%></li>
