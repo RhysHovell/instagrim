@@ -52,13 +52,13 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        String firstName=request.getParameter("first_name");
+        String firstname=request.getParameter("first_name");
         String lastname=request.getParameter("last_name");
         String email=request.getParameter("email");
         
         User us=new User();
         us.setCluster(cluster);
-        us.RegisterUser(username, password, firstName,lastname,email);
+        us.RegisterUser(username, password, firstname,lastname,email);
         
 	response.sendRedirect("index.jsp");
         
