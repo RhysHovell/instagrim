@@ -116,18 +116,22 @@ public class EditProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            String username=request.getParameter("login");
+            //String username=request.getParameter("login");
+            HttpSession session=request.getSession();
+            LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
+            
+            String username=lg.getUsername();
             String firstname=request.getParameter("first_name");
             String lastname=request.getParameter("last_name");
             String email=request.getParameter("email");
             
-            
+            System.out.println("\nlogin: " + username + ", " + firstname + ", " + lastname + ", " + email);
             
             User user = new User();
             user.setCluster(cluster);
             user.updateUserDetails(username, firstname, lastname, email);
             response.sendRedirect("index.jsp");
-            System.out.println("firstname" + firstname);
+
     }
 
     /**

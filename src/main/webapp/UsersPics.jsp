@@ -10,19 +10,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="Styles.css" >
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YourPics</title>
-        <link rel="stylesheet" type="text/css" href="/Instagrim/Styles.css" />
     </head>
     <body>
 
         
-        <nav>
-            <ul>
-                <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
-        </nav> <%
+ <%
             String username = null;
             
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
@@ -33,8 +29,7 @@
             
         %>
  
-        <article>
-            <h1>Your Pics</h1>
+
             <nav class ="navbar navbar-inverse">
             <div class="container-fluid">
                  <div class="navbar-header">
@@ -43,11 +38,13 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
+                 </div>
                      <a class="navbar-brand" href="index.jsp">Instagrim</a>
                  </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             <li><a href="Profile">Profile</a></li>
+                            <li><a href="upload.jsp">Upload</a></li>
                             <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Logout">Logout</a></li>
@@ -68,6 +65,7 @@
                 Pic p = (Pic) iterator.next();
 
         %>
+                    <h1>Your Pics</h1>
         <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
 
             }

@@ -12,6 +12,8 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
@@ -81,11 +83,29 @@ public class User {
 
     public boolean updateUserDetails(String username, String firstname, String lastname, String email){
         Session session = cluster.connect("instagrim");
-        String cqlQuery = ("update userprofiles set first_name=?,last_name=?,email=? where login =?");
+       /*String cqlQuery = ("update userprofiles set first_name=?,last_name=?,email=? where login =?");
         
         PreparedStatement ps = session.prepare(cqlQuery);
         BoundStatement bs = new BoundStatement(ps);
-        session.execute(bs.bind(username,firstname,lastname,email));
+        session.execute(bs.bind(firstname,lastname,email,username));
+        
+        */
+        Statement query = QueryBuilder.update("instagrim","userprofiles")
+                                .with(QueryBuilder.set("first_name", firstname))
+                                .and(QueryBuilder.set("last_name", lastname))
+                                .and(QueryBuilder.set("email", email))
+                 .where(QueryBuilder.eq("login", username));
+            
+        try
+        {
+            
+        session.execute(query);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+            
         
         return true;
     }

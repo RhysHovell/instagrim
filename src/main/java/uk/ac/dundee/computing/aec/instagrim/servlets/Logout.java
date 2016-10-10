@@ -20,6 +20,7 @@ public class Logout extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)  
                                 throws ServletException, IOException {
             response.setContentType("text/html"); 
+            System.out.println("You were successfully logged out!");
             PrintWriter out=response.getWriter();  
             
             request.getRequestDispatcher("index.jsp").include(request, response);  
@@ -31,7 +32,7 @@ public class Logout extends HttpServlet {
             
             response.sendRedirect("index.jsp");
             
-            out.print("You were successfully logged out!");
+          
             
             out.close();
     }  
