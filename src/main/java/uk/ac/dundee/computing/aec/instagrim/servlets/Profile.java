@@ -23,8 +23,12 @@ import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import java.io.InputStream;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
+import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
@@ -108,10 +112,54 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+             String args[] = Convertors.SplitRequestPath(request);
+             
+            HttpSession session = request.getSession();
+            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+            String user = lg.getUsername();
+            if (args[1].equals ("ProfilePicture"));
+            {
+                setProfilePic(request, response, user);
+            }
+            if (args[1].equals("DeleteProfile"));
+            {
+                
+            }
         
         
         
         
+    }
+    
+    public void setProfilePic(HttpServletRequest request, HttpServletResponse response, String user) throws ServletException, IOException{
+        for (Part part : request.getParts()) {
+            System.out.println("Part Name " + part.getName());
+
+            String type = part.getContentType();
+            String filename = part.getSubmittedFileName();
+            
+            InputStream is = request.getPart(part.getName()).getInputStream();
+            int i = is.available();
+            HttpSession session=request.getSession();
+            LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
+            String username="majed";
+            if (lg.getLoggedin()){
+                username=lg.getUsername();
+            }
+            if (i > 0) {
+                byte[] b = new byte[i + 1];
+                is.read(b);
+                System.out.println("Length : " + b.length);
+                PicModel tm = new PicModel();
+                tm.setCluster(cluster);
+                tm.setProfilePic(b, type, filename, username);
+
+                is.close();
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
+             rd.forward(request, response);
+        }
+
     }
     /**
      * Returns a short description of the servlet.

@@ -61,7 +61,15 @@
                                 <li>Email:<input type="text"name="email" value = "<%=profile.getEmail()%>"</li>
                                 </ul>
                                 <input type ="submit" value="Update">
+                                
                             </form>
+                                
+            <form method="POST" enctype="multipart/form-data" action="Image">
+                File to upload: <input type="file" name="upfile"><br/>
+
+                <br/>
+                <input type="submit" value="Press"> to upload the file!
+            </form>
                                 <% 
                                  }
                                 %>

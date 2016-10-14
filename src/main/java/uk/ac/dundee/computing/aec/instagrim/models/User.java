@@ -147,8 +147,13 @@ public class User {
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         rs = session.execute(boundStatement.bind(username));
+         if (rs.isExhausted()) {
+            System.out.println("No Profile Found");
+            return false;
+        } else {
         
         return true;
+        }
     }
     public void setCluster(Cluster cluster) {
         this.cluster = cluster;
