@@ -25,6 +25,7 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
+                 
                      <a class="navbar-brand" href="index.jsp">Instagrim</a>
                  </div>
            
@@ -41,9 +42,10 @@
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Logout">Logout</a></li>
                             </ul>
+                    </div>
                         </ul>
                     </div>
-            </div>
+           
         </nav>
                 <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
 
