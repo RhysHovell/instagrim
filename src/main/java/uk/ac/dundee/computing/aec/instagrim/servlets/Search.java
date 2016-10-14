@@ -8,10 +8,16 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import com.datastax.driver.core.Cluster;
+import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.models.User;
+
 
 /**
  *
@@ -19,7 +25,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Search", urlPatterns = {"/Search"})
 public class Search extends HttpServlet {
+    
+    Cluster cluster = null;
 
+    public void init(ServletConfig config){
+        cluster = CassandraHosts.getCluster();
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,7 +69,7 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
+            
     }
 
     /**
@@ -72,7 +83,21 @@ public class Search extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+            
+            
+            String search = request.getParameter("searchUser");
+            
+            if (search == null){
+                response.sendRedirect("index.jsp"); //If search fails return to home screen
+            }
+            else{
+            User us = new User();
+            us.setCluster(cluster);
+            boolean valid = us.userValid(search);
+            HttpSession session = request.getSession();
+            
+            
+            }
     }
 
     /**

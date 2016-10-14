@@ -139,7 +139,17 @@ public class User {
 
         return false;
     }
-
+    public boolean userValid(String username){
+        
+        String cqlQuery = "select login from userprofiles where login =?";
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare(cqlQuery);
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute(boundStatement.bind(username));
+        
+        return true;
+    }
     public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
