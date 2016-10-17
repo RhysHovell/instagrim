@@ -38,8 +38,28 @@
                  </div>
 
         </nav>
+
+	
+
+                <script>		
+		function validateForm()
+		{
+			var firstnameValue = document.forms["form"]["first_name"].value;
+		
+			window.alert("hello, this is JavaScript running");
+			document.getElementById("output").innerHTML = "first_name: " + firstnameValue;
+			
+			if (firstnameValue === null)
+				return false;
+			else
+				return true;
+		}	
+                </script>	
+	
+
+
             <h3>Register as user</h3>
-            <form method="POST"  action="Register">
+            <form method="POST"  action="Register" onsubmit="return validateForm()">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>
                     <li>Password <input type="password" name="password"></li>
@@ -48,6 +68,8 @@
                     <li>Email<input type="text" name ="email"></li>
                 </ul>
                 <input type="submit" value="Register">
-            </form> 
+            </form>
+
+ 
     </body>
 </html>

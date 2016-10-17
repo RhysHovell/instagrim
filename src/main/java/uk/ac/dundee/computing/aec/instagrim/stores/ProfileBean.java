@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package uk.ac.dundee.computing.aec.instagrim.stores;
-import java.util.UUID;
+
 
 /**
  *
@@ -15,7 +15,7 @@ public class ProfileBean {
     private String firstname = null;
     private String lastname = null;
     private String Email = null;
-    private UUID profilepic=null;
+    private Pic profilepic=null;  
 
   
     public void ProfileBean(){
@@ -44,6 +44,12 @@ public class ProfileBean {
     }
     public String getEmail(){
         return Email;
+    }
+     public void setProfilePic(Pic profilepic){
+        this.profilepic = profilepic;
+    }
+    public Pic getProfilePic(){
+        return profilepic;
     }
     
 }

@@ -50,7 +50,7 @@ public class Profile extends HttpServlet {
         
     super();
     CommandsMap.put("ProfilePicture",1);
-    CommandsMap.put("UpdateProfilePicture",2);
+    CommandsMap.put("setProfilePicture",2);
     
     
     }
@@ -156,6 +156,7 @@ public class Profile extends HttpServlet {
             int i = is.available();
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
+            ProfileBean profile = new ProfileBean();
             String username="majed";
             if (lg.getLoggedin()){
                 username=lg.getUsername();
@@ -168,7 +169,7 @@ public class Profile extends HttpServlet {
                 tm.setCluster(cluster);
                 tm.updateProfilePic(b, type, filename, username);
                 Pic profilepic = tm.getProfilePic(username);
-                lg.setProfilePic(profilepic);
+                profile.setProfilePic(profilepic);
                 is.close();
             }
 

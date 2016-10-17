@@ -62,30 +62,25 @@
         <li>Surname:<%=profile.getLastName()%></li>
         <li>Email:<%=profile.getEmail()%></li>
         <%
-            java.util.LinkedList<LoggedIn> lsPics = (java.util.LinkedList<LoggedIn>) request.getAttribute("ProfilePic");
-            if (lsPics == null) {
+            Pic p = (Pic) request.getAttribute("ProfilePic");
+            if (p == null) {
         %>
    
         <p>No Profile Picture Found</p>
         <%
         } else {
-            Iterator<LoggedIn> iterator;
-            iterator = lsPics.iterator();
-            while (iterator.hasNext()) {
-                LoggedIn p = (LoggedIn) iterator.next();
-        
-        
+              
         %>
                     <h1>Your Pics</h1>
-        <a href="/Instagrim/Image/<%=p.getProfilePic()%>" ><img src="/Instagrim/Thumb/<%=p.getProfilePic()%>"></a><br/><%
+        <a href="/Instagrim/Image/<%=profile.getProfilePic()%>" ><img src="/Instagrim/Thumb/<%=profile.getProfilePic()%>"></a><br/><%
 
             }
-            }
+            
 
         %>
         <li><a href="EditProfile">Edit Profile</a></li>
-        <%  }
-        
+        <%  
+        }
         %>
     </body>
 </html>
