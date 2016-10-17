@@ -50,10 +50,6 @@ public class PicModel {
         this.cluster = cluster;
     }
     
-    public Pic getProfilePic(String username){
-        
-        return null;
-    }
     public void setProfilePic(byte[] b, String type, String name, String user)throws IOException{
         try {
             Convertors convertor = new Convertors();
@@ -107,7 +103,7 @@ public class PicModel {
             ByteBuffer processedbuf=ByteBuffer.wrap(processedb);
             int processedlength=processedb.length;
             Session session = cluster.connect("instagrim");
-            String cqlQuery = "set image=?, thumb=?, imagelength =?, thumblength =?, type =?, name =? where user =?";
+            String cqlQuery = "update profilepic set image=?, thumb=?, imagelength =?, thumblength =?, type =?, name =? where user =?";
             PreparedStatement psProfilePic = session.prepare(cqlQuery);
             BoundStatement bsProfilePic = new BoundStatement(psProfilePic);
             
@@ -281,4 +277,41 @@ public class PicModel {
 
     }
 
+    public Pic getProfilePic(String username) {
+        Session session = cluster.connect("instagrim");
+        ByteBuffer bImage = null;
+        String type = null;
+        int length = 0;
+        try {
+            Convertors convertor = new Convertors();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+         
+            String cqlQuery = "select * from profilepictable where user = ?";
+            ps = session.prepare(cqlQuery);
+            BoundStatement boundStatement = new BoundStatement(ps);
+            rs = session.execute(boundStatement.bind(username));
+
+            if (rs.isExhausted()) {
+                System.out.println("No Images returned");
+                return null;
+            } else {
+                for (Row row : rs) {
+                        bImage = row.getBytes("thumb");
+                        length = row.getInt("thumblength");
+                        type = row.getString("type");
+
+                }
+            }
+        } catch (Exception et) {
+            System.out.println("Can't get Pic" + et);
+            return null;
+        }
+        session.close();
+        Pic p = new Pic();
+        p.setPic(bImage, length, type);
+
+        return p;
+
+    }
 }
