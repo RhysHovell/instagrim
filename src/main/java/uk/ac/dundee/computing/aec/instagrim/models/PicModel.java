@@ -71,7 +71,7 @@ public class PicModel {
             ByteBuffer processedbuf=ByteBuffer.wrap(processedb);
             int processedlength=processedb.length;
             Session session = cluster.connect("instagrim");
-            String cqlQuery = "insert into profilepicture (picid, image, thumb, user, imagelength, thumblength, type, name) values(?,?,?,?,?,?,?,?))";
+            String cqlQuery = "insert into profilepic (picid, image, thumb, user, imagelength, thumblength, type, name) values(?,?,?,?,?,?,?,?))";
             PreparedStatement psProfilePic = session.prepare(cqlQuery);
             BoundStatement bsProfilePic = new BoundStatement(psProfilePic);
             
@@ -287,7 +287,7 @@ public class PicModel {
             ResultSet rs = null;
             PreparedStatement ps = null;
          
-            String cqlQuery = "select * from profilepictable where user = ?";
+            String cqlQuery = "select * from profilepic where user = ?";
             ps = session.prepare(cqlQuery);
             BoundStatement boundStatement = new BoundStatement(ps);
             rs = session.execute(boundStatement.bind(username));

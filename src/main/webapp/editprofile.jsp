@@ -65,7 +65,7 @@
                             </form>
             <h1>Update Profile Picture</h1>
             <form method="POST" enctype="multipart/form-data" action="setProfilePicture">
-                File to upload: <input type="file" name="upfile"><%=profile.getProfilePic()%><br/>
+                File to upload: <input type="file" name="upfile"><%=lg.getProfilePic()%><br/>
                 
                 <br/>
                 <input type="submit" value="Press"> to upload the file!

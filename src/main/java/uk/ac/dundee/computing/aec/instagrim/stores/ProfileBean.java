@@ -45,11 +45,5 @@ public class ProfileBean {
     public String getEmail(){
         return Email;
     }
-    public void setProfilePic(UUID profilepic){
-        this.profilepic = profilepic;
-    }
-    public UUID getProfilePic(){
-        return profilepic;
-    }
     
 }

@@ -36,7 +36,7 @@ public final class Keyspaces {
                     + "pic_added timestamp,\n"
                     + "PRIMARY KEY (user,pic_added)\n"
                     + ") WITH CLUSTERING ORDER BY (pic_added desc);";
-            String Createprofilepictable = "CREATE TABLE if not exists instagrim.profilepic(\n"
+            String Createprofilepictable = "CREATE TABLE if not exists instagrim.profilepic (\n"
                      + " user varchar,"
                      + " picid uuid, "
                      + " image blob,"
@@ -46,7 +46,7 @@ public final class Keyspaces {
                      + " type varchar,"
                      + " name varchar,"
                      + " PRIMARY KEY (user)"
-                     + ")";  
+                     + ");";  
             String CreateAddressType = "CREATE TYPE if not exists instagrim.address (\n"
                     + "      street text,\n"
                     + "      city text,\n"
@@ -90,6 +90,7 @@ public final class Keyspaces {
              } catch (Exception et) {
                  System.out.println("Can't create profile picture table " + et);
              }
+            System.out.println("" + Createprofilepictable);
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(Createuserpiclist);
                 session.execute(cqlQuery);

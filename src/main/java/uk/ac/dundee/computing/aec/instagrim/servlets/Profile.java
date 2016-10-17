@@ -33,6 +33,7 @@ import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
  *
@@ -129,13 +130,10 @@ public class Profile extends HttpServlet {
             HttpSession session = request.getSession();
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
             String user = lg.getUsername();
-            if (args[1].equals ("ProfilePicture"));
-            {
-                setProfilePic(request, response, user);
-            }
             if (args[1].equals ("setProfilePicture"));
             {
                 setProfilePic(request, response, user);
+                response.sendRedirect("Profile");
             }
             if (args[1].equals("DeleteProfile"));
             {
@@ -168,12 +166,12 @@ public class Profile extends HttpServlet {
                 System.out.println("Length : " + b.length);
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
-                tm.setProfilePic(b, type, filename, username);
-
+                tm.updateProfilePic(b, type, filename, username);
+                Pic profilepic = tm.getProfilePic(username);
+                lg.setProfilePic(profilepic);
                 is.close();
             }
-            RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
-             rd.forward(request, response);
+
         }
 
     }

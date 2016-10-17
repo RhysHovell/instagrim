@@ -97,6 +97,10 @@ public class Image extends HttpServlet {
             case 3:
                 DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
                 break;
+            case 4:
+                DisplayProfileImage(args[3],args[3],request, response);
+                DisplayImage(Convertors.DISPLAY_PROCESSED,args[3],  response);
+                break;
             default:
                 error("Bad Operator", response);
         }
@@ -133,7 +137,18 @@ public class Image extends HttpServlet {
         }
         out.close();
     }
-
+    private void DisplayProfileImage(String user, String Image, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        PicModel tm = new PicModel();
+        tm.setCluster(cluster);
+        
+        Pic p = tm.getPic(Convertors.DISPLAY_PROCESSED,java.util.UUID.fromString(Image));
+        RequestDispatcher rd = request.getRequestDispatcher("/userprofile.jsp");
+        request.setAttribute("ProfilePic", p);
+        rd.forward(request, response);
+        
+        
+        
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
