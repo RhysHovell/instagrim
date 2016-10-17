@@ -86,6 +86,38 @@ public class PicModel {
             System.out.println("Error --> " + ex);
             }
     }
+     public void updateProfilePic(byte[] b, String type, String name, String user)throws IOException{
+        try {
+            Convertors convertor = new Convertors();
+
+            String types[]=Convertors.SplitFiletype(type);
+            ByteBuffer buffer = ByteBuffer.wrap(b);
+            int length = b.length;
+            java.util.UUID picid = convertor.getTimeUUID();
+            
+            //The following is a quick and dirty way of doing this, will fill the disk quickly !
+            Boolean success = (new File("/var/tmp/instagrim/")).mkdirs();
+            FileOutputStream output = new FileOutputStream(new File("/var/tmp/instagrim/" + picid));
+
+            output.write(b);
+            byte []  thumbb = picresize(picid.toString(),types[1]);
+            int thumblength= thumbb.length;
+            ByteBuffer thumbbuf=ByteBuffer.wrap(thumbb);
+            byte[] processedb = picdecolour(picid.toString(),types[1]);
+            ByteBuffer processedbuf=ByteBuffer.wrap(processedb);
+            int processedlength=processedb.length;
+            Session session = cluster.connect("instagrim");
+            String cqlQuery = "set image=?, thumb=?, imagelength =?, thumblength =?, type =?, name =? where user =?";
+            PreparedStatement psProfilePic = session.prepare(cqlQuery);
+            BoundStatement bsProfilePic = new BoundStatement(psProfilePic);
+            
+            session.execute(bsProfilePic.bind(buffer, thumbbuf, length, thumblength, type, name, user));
+            session.close();
+        }
+            catch (IOException ex) {
+            System.out.println("Error --> " + ex);
+            }
+    }
     public void insertPic(byte[] b, String type, String name, String user) {
         try {
             Convertors convertor = new Convertors();
