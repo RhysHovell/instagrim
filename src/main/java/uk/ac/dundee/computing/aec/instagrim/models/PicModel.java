@@ -54,7 +54,7 @@ public class PicModel {
         
         return null;
     }
-    public void setProfilePic(byte[] b, String type, String name, String user){
+    public void setProfilePic(byte[] b, String type, String name, String user)throws IOException{
         try {
             Convertors convertor = new Convertors();
 
@@ -75,11 +75,11 @@ public class PicModel {
             ByteBuffer processedbuf=ByteBuffer.wrap(processedb);
             int processedlength=processedb.length;
             Session session = cluster.connect("instagrim");
-
-            PreparedStatement psProfilePic = session.prepare("update userprofiles setpicid = ? where login = ?");
+            String cqlQuery = "insert into profilepicture (picid, image, thumb, user, imagelength, thumblength, type, name) values(?,?,?,?,?,?,?,?))";
+            PreparedStatement psProfilePic = session.prepare(cqlQuery);
             BoundStatement bsProfilePic = new BoundStatement(psProfilePic);
             
-            session.execute(bsProfilePic.bind(picid));
+            session.execute(bsProfilePic.bind(picid, user));
             session.close();
         }
             catch (IOException ex) {

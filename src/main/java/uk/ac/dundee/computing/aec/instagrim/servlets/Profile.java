@@ -24,7 +24,9 @@ import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.InputStream;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
@@ -36,11 +38,21 @@ import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
  *
  * @author Rhys
  */
-@WebServlet(name = "Profile", urlPatterns = {"/Profile"})
+@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/setProfilePicture"})
+@MultipartConfig
 public class Profile extends HttpServlet {
     
     Cluster cluster=null;
-            
+    private HashMap CommandsMap = new HashMap();
+    
+    public Profile(){
+        
+    super();
+    CommandsMap.put("ProfilePicture",1);
+    CommandsMap.put("UpdateProfilePicture",2);
+    
+    
+    }
     @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
@@ -121,6 +133,10 @@ public class Profile extends HttpServlet {
             {
                 setProfilePic(request, response, user);
             }
+            if (args[1].equals ("setProfilePicture"));
+            {
+                setProfilePic(request, response, user);
+            }
             if (args[1].equals("DeleteProfile"));
             {
                 
@@ -156,7 +172,7 @@ public class Profile extends HttpServlet {
 
                 is.close();
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
              rd.forward(request, response);
         }
 

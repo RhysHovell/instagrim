@@ -63,10 +63,10 @@
                                 <input type ="submit" value="Update">
                                 
                             </form>
-                                
-            <form method="POST" enctype="multipart/form-data" action="Image">
-                File to upload: <input type="file" name="upfile"><br/>
-
+            <h1>Update Profile Picture</h1>
+            <form method="POST" enctype="multipart/form-data" action="setProfilePicture">
+                File to upload: <input type="file" name="upfile"><%=profile.getProfilePic()%><br/>
+                
                 <br/>
                 <input type="submit" value="Press"> to upload the file!
             </form>

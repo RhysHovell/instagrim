@@ -61,6 +61,8 @@
         <li>First Name:<%=profile.getFirstName()%></li>
         <li>Surname:<%=profile.getLastName()%></li>
         <li>Email:<%=profile.getEmail()%></li>
+        <li>Profile picture:<%=profile.getProfilePic()%></li>
+        
         
     </ul>
         
