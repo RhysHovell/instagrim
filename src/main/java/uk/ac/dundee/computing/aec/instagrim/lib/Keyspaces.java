@@ -55,8 +55,7 @@ public final class Keyspaces {
             String CreateCommentList = "CREATE TABLE if not exists instagrim.commentlist(\n"
                     +"      commentid uuid, \n"
                     +"      picid uuid, \n"
-                    +"      user varchar,"
-                    +"      commentid  \n"
+                    +"      user varchar,\n"
                     +"      comment varchar, \n"
                     +"      PRIMARY KEY(pidic, commentid);\n"
                     +"      ) WITH CLUSTERING ORDER BY (commentid desc);";

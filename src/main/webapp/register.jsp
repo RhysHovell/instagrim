@@ -13,7 +13,6 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="Styles.css">
     </head>
-    <body>
         <body>
         <nav class ="navbar navbar-inverse">
             <div class="container-fluid">
@@ -44,22 +43,49 @@
                 <script>		
 		function validateForm()
 		{
-			var firstnameValue = document.forms["form"]["first_name"].value;
+			var firstnameValue = document.forms["registerforrm"]["first_name"].value;
 		
 			window.alert("hello, this is JavaScript running");
 			document.getElementById("output").innerHTML = "first_name: " + firstnameValue;
 			
-			if (firstnameValue === null)
+			if (firstnameValue == null){
 				return false;
-			else
+                                window.alert("First Name cannot be blank");
+                            }else{
 				return true;
+                            }
 		}	
-                </script>	
+                </script>
+                
+<button type="button" onclick="loadDoc()">Change Content</button>
+
+<!--AJAX SCRIPT-->
+<script>
+function loadDoc() {
+  var xhttp;
+  if (window.XMLHttpRequest) {
+    // code for modern browsers
+    xhttp = new XMLHttpRequest();
+    } else {
+    // code for IE6, IE5
+    xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "Register", true);
+  xhttp.send();
+}
+</script>
+
 	
 
 
             <h3>Register as user</h3>
-            <form method="POST"  action="Register" onsubmit="return validateForm()">
+            <div id = "output">
+            <form name="registerforrm" form method="POST"  action="Register" onsubmit="return validateForm()">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>
                     <li>Password <input type="password" name="password"></li>
@@ -68,8 +94,9 @@
                     <li>Email<input type="text" name ="email"></li>
                 </ul>
                 <input type="submit" value="Register">
+            
             </form>
+        </div>
 
- 
     </body>
 </html>
