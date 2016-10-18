@@ -64,7 +64,8 @@
                                 
                             </form>
                                 <h1>Update Profile Picture</h1>
-            <img id="profilePicture" class="thumbnail" alt="User profile picture" src="/Instagrim/setProfilePicture">
+            <img id="profilePicture" class="thumbnail" alt="User profile picture" src="/Instagrim/displayProfilePicture">
+           
             <form method="POST" enctype="multipart/form-data" action="setProfilePicture">
                 File to upload: <input type="file" name="profilePic"><br/>
                 

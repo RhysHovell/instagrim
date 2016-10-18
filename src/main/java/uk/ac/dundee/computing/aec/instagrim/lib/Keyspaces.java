@@ -52,6 +52,14 @@ public final class Keyspaces {
                     + "      city text,\n"
                     + "      zip int\n"
                     + "  );";
+            String CreateCommentList = "CREATE TABLE if not exists instagrim.commentlist(\n"
+                    +"      commentid uuid, \n"
+                    +"      picid uuid, \n"
+                    +"      user varchar,"
+                    +"      commentid  \n"
+                    +"      comment varchar, \n"
+                    +"      PRIMARY KEY(pidic, commentid);\n"
+                    +"      ) WITH CLUSTERING ORDER BY (commentid desc);";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
                     + "      password text,\n"
@@ -97,6 +105,13 @@ public final class Keyspaces {
             } catch (Exception et) {
                 System.out.println("Can't create user pic list table " + et);
             }
+             try {
+                SimpleStatement cqlQuery = new SimpleStatement(CreateCommentList);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create comment list table " + et);
+            }
+            System.out.println("" + Createuserpiclist);
             System.out.println("" + CreateAddressType);
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreateAddressType);
