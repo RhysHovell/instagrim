@@ -62,7 +62,6 @@ public class Image extends HttpServlet {
         CommandsMap.put("Image", 1);
         CommandsMap.put("Images", 2);
         CommandsMap.put("Thumb", 3);
-        CommandsMap.put("ProfilePic",4);
 
     }
 
@@ -96,9 +95,6 @@ public class Image extends HttpServlet {
                 break;
             case 3:
                 DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
-                break;
-            case 4:
-                DisplayProfileImage(Convertors.DISPLAY_PROCESSED,args[3],  response);
                 break;
             default:
                 error("Bad Operator", response);
@@ -136,25 +132,7 @@ public class Image extends HttpServlet {
         }
         out.close();
     }
-    private void DisplayProfileImage(int type, String Image, HttpServletResponse response) throws ServletException, IOException{
-        PicModel tm = new PicModel();
-        tm.setCluster(cluster);
-  
-        Pic p = tm.getPic(type,java.util.UUID.fromString(Image));
-        
-        OutputStream out = response.getOutputStream();
 
-        response.setContentType(p.getType());
-        response.setContentLength(p.getLength());
-        //out.write(Image);
-        InputStream is = new ByteArrayInputStream(p.getBytes());
-        BufferedInputStream input = new BufferedInputStream(is);
-        byte[] buffer = new byte[8192];
-        for (int length = 0; (length = input.read(buffer)) > 0;) {
-            out.write(buffer, 0, length);
-        }
-        out.close();
-    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());

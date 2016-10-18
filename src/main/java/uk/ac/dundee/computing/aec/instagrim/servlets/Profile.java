@@ -23,7 +23,10 @@ import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.MultipartConfig;
@@ -39,7 +42,7 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
  *
  * @author Rhys
  */
-@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/setProfilePicture"})
+@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/setProfilePicture", "/displayProfilePicture"})
 @MultipartConfig
 public class Profile extends HttpServlet {
     
@@ -94,9 +97,15 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
        // processRequest(request, response);
         
+       String args[] = Convertors.SplitRequestPath(request);
+       
         HttpSession session=request.getSession();
         LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
-        
+         if (args[1].equals ("displayProfilePicture"))
+            {
+                displayProfilePic(lg, request, response);
+                return;
+            }
         User user = new User();
         user.setCluster(cluster);
         ProfileBean profile = new ProfileBean();
@@ -132,8 +141,9 @@ public class Profile extends HttpServlet {
             String user = lg.getUsername();
             if (args[1].equals ("setProfilePicture"));
             {
+                System.out.println("1");
                 setProfilePic(request, response, user);
-                response.sendRedirect("Profile");
+                response.sendRedirect("/Instagrim/Profile");
             }
             if (args[1].equals("DeleteProfile"));
             {
@@ -145,6 +155,22 @@ public class Profile extends HttpServlet {
         
     }
     
+    public void displayProfilePic(LoggedIn lg, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+         Pic p = lg.getProfilePic();
+         try (OutputStream out = response.getOutputStream()) {
+             response.setContentType(p.getType());
+             response.setContentLength(p.getLength());
+             InputStream is = new ByteArrayInputStream(p.getBytes());
+             BufferedInputStream input = new BufferedInputStream(is);
+             byte[] buffer = new byte[8192];
+             for (int length; (length = input.read(buffer)) > 0;) {
+                 out.write(buffer, 0, length);
+             }
+         } catch (Exception e) {
+
+         }
+      }
+      
     public void setProfilePic(HttpServletRequest request, HttpServletResponse response, String user) throws ServletException, IOException{
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
@@ -156,7 +182,6 @@ public class Profile extends HttpServlet {
             int i = is.available();
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            ProfileBean profile = new ProfileBean();
             String username="majed";
             if (lg.getLoggedin()){
                 username=lg.getUsername();
@@ -169,7 +194,7 @@ public class Profile extends HttpServlet {
                 tm.setCluster(cluster);
                 tm.updateProfilePic(b, type, filename, username);
                 Pic profilepic = tm.getProfilePic(username);
-                profile.setProfilePic(profilepic);
+                lg.setProfilePic(profilepic);
                 is.close();
             }
 

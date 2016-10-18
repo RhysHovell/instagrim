@@ -16,8 +16,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
  *
@@ -60,7 +64,17 @@ public class Register extends HttpServlet {
         us.setCluster(cluster);
         us.RegisterUser(username, password, firstname,lastname,email);
         
-	response.sendRedirect("index.jsp");
+        HttpSession session = request.getSession();
+        LoggedIn lg = new LoggedIn();
+        lg.setLoggedin();
+        lg.setUsername(username);
+        PicModel p = new PicModel();
+        p.setCluster(cluster);
+        Pic profilePicture = p.getProfilePic(username);
+        lg.setProfilePic(profilePicture);
+        session.setAttribute("LoggedIn", lg);
+        RequestDispatcher rd = request.getRequestDispatcher("/");
+	rd.forward(request, response);
         
     }
 
@@ -69,7 +83,7 @@ public class Register extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
+   
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

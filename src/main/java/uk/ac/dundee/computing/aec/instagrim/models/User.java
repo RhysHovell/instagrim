@@ -45,6 +45,11 @@ public class User {
 
         BoundStatement boundStatement = new BoundStatement(ps);
         session.execute(boundStatement.bind(username, EncodedPassword, firstname, lastname, email));
+       
+        PreparedStatement ps2 = session.prepare("insert into profilepic(user) Values(?)");
+        BoundStatement bs2 = new BoundStatement(ps2);
+        session.execute(bs2.bind(username));
+        
         //We are assuming this always works. Also a transaction would be good here !
 
         session.close();

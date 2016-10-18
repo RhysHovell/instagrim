@@ -65,22 +65,24 @@
             Pic p = (Pic) request.getAttribute("ProfilePic");
             if (p == null) {
         %>
-   
-        <p>No Profile Picture Found</p>
+        <img id="profilePicture" class="thumbnail" alt="User profile picture" src="/Instagrim/displayProfilePicture">
+        <li><a href="EditProfile">Edit Profile</a></li>
+       </ul>
         <%
         } else {
               
         %>
-                    <h1>Your Pics</h1>
-        <a href="/Instagrim/Image/<%=profile.getProfilePic()%>" ><img src="/Instagrim/Thumb/<%=profile.getProfilePic()%>"></a><br/><%
+                   
+       
 
-            }
+            
             
 
-        %>
-        <li><a href="EditProfile">Edit Profile</a></li>
+        
+
         <%  
         }
+}
         %>
     </body>
 </html>

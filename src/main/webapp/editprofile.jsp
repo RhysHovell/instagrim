@@ -63,12 +63,14 @@
                                 <input type ="submit" value="Update">
                                 
                             </form>
-            <h1>Update Profile Picture</h1>
+                                <h1>Update Profile Picture</h1>
+            <img id="profilePicture" class="thumbnail" alt="User profile picture" src="/Instagrim/setProfilePicture">
             <form method="POST" enctype="multipart/form-data" action="setProfilePicture">
-                File to upload: <input type="file" name="upfile"><%=lg.getProfilePic()%><br/>
+                File to upload: <input type="file" name="profilePic"><br/>
                 
                 <br/>
                 <input type="submit" value="Press"> to upload the file!
+              
             </form>
                                 <% 
                                  }

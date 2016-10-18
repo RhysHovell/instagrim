@@ -15,6 +15,7 @@ package uk.ac.dundee.computing.aec.instagrim.stores;
 public class LoggedIn {
     boolean loggedin=false;
     String Username=null;
+    private Pic profilepic=null;
   
     public void LoggedIn(){
         
@@ -39,6 +40,12 @@ public class LoggedIn {
     public boolean getLoggedin(){
         return loggedin;
     }
-
+    public void setProfilePic(Pic profilepic){
+        this.profilepic = profilepic;
+    }
+    public Pic getProfilePic(){
+        return profilepic;
+    }
+    
     
 }
