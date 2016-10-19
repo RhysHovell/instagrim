@@ -77,7 +77,7 @@
         <p>comment:<%=comment%></p>
         <p>date:<%=date%>></p>
         <% }
-
+}
             %>
         </article>
     </body>
