@@ -79,6 +79,10 @@
         <% }
 }
             %>
+            <form method="POST" action="Comment">
+                <textarea type="text" name="commentBox" cols="40" rows="5"></textarea>
+                <input type="submit" value ="Submit">
+            </form>
         </article>
     </body>
 </html>
