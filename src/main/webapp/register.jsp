@@ -43,14 +43,14 @@
                 <script>		
 		function validateForm()
 		{
-			var firstnameValue = document.forms["registerforrm"]["first_name"].value;
-		
-			window.alert("hello, this is JavaScript running");
-			document.getElementById("output").innerHTML = "first_name: " + firstnameValue;
+                        document.getElementById("output").innerHTML = "";
 			
-			if (firstnameValue == null){
-				return false;
-                                window.alert("First Name cannot be blank");
+			var firstnameValue = document.forms["registerforrm"]["first_name"].value;
+			
+			if (firstnameValue == ""){
+				
+                               document.getElementById("output").innerHTML = "Error";
+                               return false;
                             }else{
 				return true;
                             }
@@ -94,7 +94,7 @@ function loadDoc() {
                     <li>Email<input type="text" name ="email"></li>
                 </ul>
                 <input type="submit" value="Register">
-            
+                <p id ="output"></p>
             </form>
         </div>
 

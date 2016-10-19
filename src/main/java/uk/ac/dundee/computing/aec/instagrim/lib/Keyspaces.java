@@ -53,12 +53,13 @@ public final class Keyspaces {
                     + "      zip int\n"
                     + "  );";
             String CreateCommentList = "CREATE TABLE if not exists instagrim.commentlist(\n"
-                    +"      commentid uuid, \n"
                     +"      picid uuid, \n"
+                    +"      commentid uuid, \n"
                     +"      user varchar,\n"
+                    +"      commenttime timestamp, \n"                
                     +"      comment varchar, \n"
                     +"      PRIMARY KEY(pidic, commentid);\n"
-                    +"      ) WITH CLUSTERING ORDER BY (commentid desc);";
+                    +"      ) WITH CLUSTERING ORDER BY (commenttime desc);";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
                     + "      password text,\n"

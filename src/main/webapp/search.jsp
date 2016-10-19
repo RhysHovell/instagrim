@@ -13,6 +13,8 @@
         <title>Search</title>
     </head>
     <body>
-        <h1>Search For a Photo!</h1>
+        <h1>Search For a User!</h1>
+        
+        <h1>Search All Users</h1>
     </body>
 </html>

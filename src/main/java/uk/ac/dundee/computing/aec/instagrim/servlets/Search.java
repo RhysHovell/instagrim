@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import com.datastax.driver.core.Cluster;
+import java.util.LinkedList;
 import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
 
 
 /**
@@ -95,6 +97,15 @@ public class Search extends HttpServlet {
             us.setCluster(cluster);
             boolean valid = us.userValid(search);
             HttpSession session = request.getSession();
+            String output = "";
+            LinkedList<ProfileBean> profileBeanList = new LinkedList();
+            profileBeanList = us.searchAll();
+            for(int i = 0;i <profileBeanList.size();i++)
+            {   
+               output ="<p>"+ profileBeanList.get(i).getLogin() +"</p>";
+                
+            }
+            
             
             
             }
