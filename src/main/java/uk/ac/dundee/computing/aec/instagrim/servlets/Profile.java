@@ -147,14 +147,20 @@ public class Profile extends HttpServlet {
             }
             if (args[1].equals("DeleteProfile"));
             {
-                
+                deleteProfile(request, response, user);
+                response.sendRedirect("/Instagrim/Login");
             }
         
         
         
         
     }
-    
+    public void deleteProfile(HttpServletRequest request, HttpServletResponse response, String user) throws ServletException, IOException{
+        String username = user;
+        User us = new User();
+        us.setCluster(cluster);
+        us.deleteUser(username);
+    }
     public void displayProfilePic(LoggedIn lg, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
          Pic p = lg.getProfilePic();
          try (OutputStream out = response.getOutputStream()) {

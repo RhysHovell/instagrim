@@ -92,12 +92,6 @@ public class PicModel {
             ByteBuffer buffer = ByteBuffer.wrap(b);
             int length = b.length;
             java.util.UUID picid = convertor.getTimeUUID();
-            
-            //The following is a quick and dirty way of doing this, will fill the disk quickly !
-            Boolean success = (new File("/var/tmp/instagrim/")).mkdirs();
-            FileOutputStream output = new FileOutputStream(new File("/var/tmp/instagrim/" + picid));
-
-            output.write(b);
             byte []  thumbb = picresize(picid.toString(),types[1]);
             int thumblength= thumbb.length;
             ByteBuffer thumbbuf=ByteBuffer.wrap(thumbb);
@@ -112,8 +106,9 @@ public class PicModel {
             session.execute(bsProfilePic.bind(buffer, thumbbuf, length, thumblength, type, name, user));
             session.close();
         }
-            catch (IOException ex) {
-            System.out.println("Error --> " + ex);
+            catch (Exception e) {
+            System.out.println("Error --> " + e);
+            throw new IOException();
             }
     }
     public void insertPic(byte[] b, String type, String name, String user) {

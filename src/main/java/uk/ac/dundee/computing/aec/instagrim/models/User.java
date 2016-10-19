@@ -138,7 +138,15 @@ public class User {
         
         return true;
     }
-
+    public void deleteUser(String username){
+        Session session = cluster.connect("instagrim");
+        PreparedStatement deleteUser = session.prepare("delete * from userprofiles where login=?");
+        session.execute(deleteUser.bind(username));
+        
+        
+        
+        
+    }
     public boolean IsValidUser(String username, String Password) {
         AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
         String EncodedPassword = null;

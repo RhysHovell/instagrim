@@ -28,7 +28,7 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
  *
  * @author rhysh
  */
-@WebServlet(name = "Comment", urlPatterns = {"/Comment"})
+@WebServlet(name = "Comment", urlPatterns = {"/Comment","/Comments"})
 public class Comment extends HttpServlet {
     
     Cluster cluster = null;
