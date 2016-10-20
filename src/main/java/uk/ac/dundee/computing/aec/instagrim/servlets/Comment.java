@@ -106,8 +106,9 @@ public class Comment extends HttpServlet {
             throws ServletException, IOException {
         
             String picid = request.getParameter("picid");
-            String comment = request.getParameter("commentBox");
+            String comment = request.getParameter("comment");
             
+            System.out.println("Comment" + comment);
             HttpSession session = request.getSession();
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
             String username = lg.getUsername();

@@ -13,6 +13,7 @@ import java.util.*;
 
 public class Comments {
     private UUID commentID = null;
+    private UUID picID = null;
     private String user = null;
     private String comment = null;
     private Date date = null;
@@ -40,6 +41,12 @@ public class Comments {
     }
     public void setDate(Date date){
         this.date = date;
+    }
+    public UUID getPicID(){
+        return picID;
+    }
+    public void setPicID(UUID picID){
+        this.picID = picID;
     }
     
     
