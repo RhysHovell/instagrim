@@ -58,7 +58,7 @@ public final class Keyspaces {
                     +"      user varchar,\n"
                     +"      commenttime timestamp, \n"                
                     +"      comment varchar, \n"
-                    +"      PRIMARY KEY(pidic, commentid);\n"
+                    +"      PRIMARY KEY(pidic, commentid)"
                     +"      ) WITH CLUSTERING ORDER BY (commenttime desc);";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
