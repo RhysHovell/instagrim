@@ -5,13 +5,24 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
+import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
+import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
+import uk.ac.dundee.computing.aec.instagrim.stores.Comments;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
  *
@@ -19,7 +30,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Comment", urlPatterns = {"/Comment"})
 public class Comment extends HttpServlet {
-
+    
+       Cluster cluster = null;
+    
+        public void init(ServletConfig config) throws ServletException {
+        // TODO Auto-generated method stub
+        cluster = CassandraHosts.getCluster();
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,8 +75,25 @@ public class Comment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+        
+            String args[] = Convertors.SplitRequestPath(request);
+            PicModel p = new PicModel();
+            p.setCluster(cluster);
+            
+            Pic pic = p.getPic(Convertors.DISPLAY_PROCESSED,UUID.fromString(args[2]));
+            java.util.LinkedList<Comments> Comments = p.getComments(args[2]);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/UserPics.jsp");
+            
+            request.setAttribute("Pic",pic);
+            request.setAttribute("Comment",Comments);
+            rd.forward(request,response);
+                    
+            
+            
     }
+       
+ 
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -72,8 +106,23 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                String picid = request.getParameter("picid");
+            String comment = request.getParameter("comment");
+            
+            System.out.println("Comment" + comment);
+            HttpSession session = request.getSession();
+            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+            String username = lg.getUsername();
+                if(lg.getLoggedin()){
+                    PicModel pm = new PicModel();
+                    pm.setCluster(cluster);
+                    System.out.print(comment);
+                    pm.insertComment(java.util.UUID.fromString(picid),username,comment);
+                }
         
     }
+        
+    
 
     /**
      * Returns a short description of the servlet.

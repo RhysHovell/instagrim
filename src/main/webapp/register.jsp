@@ -12,6 +12,23 @@
         <title>Register</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="Styles.css">
+          <script>		
+		function validateForm()
+		{
+                        document.getElementById("output").innerHTML = "";
+			
+			var firstnameValue = document.forms["registerform"]["first_name"].value;
+			
+			if (firstnameValue == ""){
+				
+                               document.getElementById("output").innerHTML = "Error";
+                               return false;
+                            }else{
+				return true;
+                            }
+		}	
+                </script>
+                
     </head>
         <body>
         <nav class ="navbar navbar-inverse">
@@ -40,24 +57,9 @@
 
 	
 
-                <script>		
-		function validateForm()
-		{
-			var firstnameValue = document.forms["registerforrm"]["first_name"].value;
-		
-			window.alert("hello, this is JavaScript running");
-			document.getElementById("output").innerHTML = "first_name: " + firstnameValue;
-			
-			if (firstnameValue == null){
-				return false;
-                                window.alert("First Name cannot be blank");
-                            }else{
-				return true;
-                            }
-		}	
-                </script>
-                
-<button type="button" onclick="loadDoc()">Change Content</button>
+       		
+              
+
 
 <!--AJAX SCRIPT-->
 <script>
@@ -84,8 +86,8 @@ function loadDoc() {
 
 
             <h3>Register as user</h3>
-            <div id = "output">
-            <form name="registerforrm" form method="POST"  action="Register" onsubmit="return validateForm()">
+         
+            <form name="registerform" method="POST"  action="Register" onsubmit="return validateForm()">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>
                     <li>Password <input type="password" name="password"></li>
@@ -94,7 +96,7 @@ function loadDoc() {
                     <li>Email<input type="text" name ="email"></li>
                 </ul>
                 <input type="submit" value="Register">
-            
+                <p id="output"></p>
             </form>
         </div>
 

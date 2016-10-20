@@ -16,6 +16,7 @@ import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
 import uk.ac.dundee.computing.aec.instagrim.stores.*;
 
@@ -56,7 +57,55 @@ public class User {
 
         return true;
     }
-
+     java.util.LinkedList<ProfileBean> searchUser(String username){
+        java.util.LinkedList<ProfileBean> lsProfile = new LinkedList<>();
+        
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select * from userprofiles");
+        ResultSet rs = null;
+        BoundStatement bs = new BoundStatement(ps);
+        rs = session.execute(bs.bind());
+        
+        if(rs.isExhausted()){
+            System.out.println("No users Found");
+            return null;            
+        }
+        else{
+            for (Row row : rs){
+                ProfileBean profile = new ProfileBean();
+                profile.setLogin(row.getString("login"));
+                lsProfile.add(profile);
+            }
+        }
+        
+        session.close();
+        return lsProfile;
+    }
+    public java.util.LinkedList<ProfileBean> searchAll(){
+        Session session = cluster.connect("instagrim");
+        LinkedList<ProfileBean> profileBeanList = new LinkedList();
+        
+        
+        String cqlQuery = "select * from userprofiles";
+        PreparedStatement ps = session.prepare(cqlQuery);
+        ResultSet rs;
+        BoundStatement bs = new BoundStatement(ps);
+        rs = session.execute(bs.bind());
+        if(rs.isExhausted()){
+            System.out.println("Profile not found");
+        }
+        else
+        {
+            for (Row row : rs){
+            ProfileBean profile = new ProfileBean();
+            profile.setLogin(row.getString("login"));
+            profileBeanList.add(profile);    
+        }
+            
+        }
+        session.close();
+        return profileBeanList;
+    }
     public ProfileBean getUserInfo(ProfileBean profile, String username) {
 
         Session session = cluster.connect("instagrim");
@@ -82,6 +131,7 @@ public class User {
         }
       
         }
+        session.close();
         return profile;
         
     }
@@ -111,7 +161,7 @@ public class User {
             e.printStackTrace();
         }
             
-        
+        session.close();
         return true;
     }
 
@@ -157,6 +207,7 @@ public class User {
             return false;
         } else {
         
+        session.close();    
         return true;
         }
     }

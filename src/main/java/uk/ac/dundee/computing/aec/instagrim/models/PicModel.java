@@ -30,11 +30,13 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.UUID;
 import javax.imageio.ImageIO;
 import static org.imgscalr.Scalr.*;
 import org.imgscalr.Scalr.Method;
 
 import uk.ac.dundee.computing.aec.instagrim.lib.*;
+import uk.ac.dundee.computing.aec.instagrim.stores.Comments;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 //import uk.ac.dundee.computing.aec.stores.TweetStore;
 
@@ -82,6 +84,29 @@ public class PicModel {
             System.out.println("Error --> " + ex);
             }
     }
+    public java.util.LinkedList<Comments> getComments(String picid){
+        java.util.LinkedList<Comments> CommentList = new java.util.LinkedList<>();
+        Session session = cluster.connect("instagrim");
+        
+        String cqlQuery = "select * from commentlist where picid =?";
+        PreparedStatement ps = session.prepare(cqlQuery);
+        BoundStatement bs = new BoundStatement(ps);
+        ResultSet rs = session.execute(bs.bind(UUID.fromString(picid)));
+        if(!rs.isExhausted()){
+            {
+                for (Row row:rs){
+                    Comments comments = new Comments();
+                    comments.setCommentID(row.getUUID("commentid"));
+                    comments.setUser(row.getString("user"));
+                    comments.setComment(row.getString("comment"));
+                    comments.setDate(row.getDate("commenttime"));
+                    CommentList.add(comments);
+                }
+                
+            }
+        }
+        return CommentList;
+    }
      public void updateProfilePic(byte[] b, String type, String name, String user)throws IOException{
         try {
             Convertors convertor = new Convertors();
@@ -113,6 +138,18 @@ public class PicModel {
             catch (IOException ex) {
             System.out.println("Error --> " + ex);
             }
+    }
+    public void insertComment(java.util.UUID picid, String user, String comment)
+        {
+           UUID commentID = UUID.randomUUID();
+           Session session = cluster.connect("instagrim");
+           Date dateAdded =  new Date();
+           String cqlQuery = ("insert into commentlist(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)");
+           PreparedStatement ps = session.prepare(cqlQuery);
+           BoundStatement bs = new BoundStatement(ps);
+           session.execute(bs.bind(commentID,picid,user,comment,dateAdded));
+           session.close();
+  
     }
     public void insertPic(byte[] b, String type, String name, String user) {
         try {

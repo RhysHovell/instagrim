@@ -4,6 +4,7 @@
     Author     : Administrator
 --%>
 
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.Comments"%>
 <%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
@@ -23,7 +24,6 @@
             
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
             username = lg.getUsername();
-
             ProfileBean profile = new ProfileBean();
             profile = (ProfileBean) request.getAttribute("Profile");
             
@@ -55,6 +55,7 @@
         </nav>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
+            java.util.LinkedList<Comments> lsComments = (java.util.LinkedList<Comments>) request.getAttribute("Comments");
             if (lsPics == null) {
         %>
         <p>No Pictures found</p>
@@ -64,14 +65,43 @@
             iterator = lsPics.iterator();
             while (iterator.hasNext()) {
                 Pic p = (Pic) iterator.next();
-
         %>
                     <h1>Your Pics</h1>
-        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/>
+        <form method ="POST" action="/Instagrim/Comment">
+            <input type ="text" name="username" value="<%=lg.getUsername()%>" hidden>
+            <input type ="text" name="picid" value="<%=p.getSUUID()%>" hidden>
+            <input type ="text" name="comment" value ="comment">
+            <input type ="submit" value="Submit">
+        </form>
 
-            }
-            }
-        %>
+        <%
+            if (lsComments == null) {
+        } else {
+            Iterator<Comments> itComment;
+            itComment = lsComments.iterator();
+            while (itComment.hasNext()) {
+                Comments c = (Comments) itComment.next();
+                
+                if(c.getPicID().toString().equals(p.getSUUID())){
+                    String user = c.getUser();
+                    String comment = c.getComment();
+                    Date date = c.getDate();
+                }
+                    %>
+                    
+                    
+                    <p>user</p>
+                    <p>comment</p>
+                    <p>date</p>
+                    
+                    
+                          <%
+                }
+}
+}
+}
+%>
         </article>
     </body>
 </html>
