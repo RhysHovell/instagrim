@@ -81,6 +81,28 @@ public class User {
         }
         return profileBeanList;
     }
+    java.util.LinkedList<ProfileBean> searchUser(String username){
+        java.util.LinkedList<ProfileBean> lsProfile = new LinkedList<>();
+        
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select * from userprofiles");
+        ResultSet rs = null;
+        BoundStatement bs = new BoundStatement(ps);
+        rs = session.execute(bs.bind());
+        
+        if(rs.isExhausted()){
+            System.out.println("No users Found");
+            return null;            
+        }
+        else{
+            for (Row row : rs){
+                ProfileBean profile = new ProfileBean();
+                profile.setLogin(row.getString("login"));
+                lsProfile.add(profile);
+            }
+        }
+        return lsProfile;
+    }
     public ProfileBean getUserInfo(ProfileBean profile, String username) {
 
         Session session = cluster.connect("instagrim");
