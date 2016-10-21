@@ -130,7 +130,7 @@ public class EditProfile extends HttpServlet {
             User user = new User();
             user.setCluster(cluster);
             user.updateUserDetails(username, firstname, lastname, email);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("userprofile.jsp");
 
     }
 

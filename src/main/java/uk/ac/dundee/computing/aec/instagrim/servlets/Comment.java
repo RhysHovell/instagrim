@@ -83,7 +83,7 @@ public class Comment extends HttpServlet {
             Pic pic = p.getPic(Convertors.DISPLAY_PROCESSED,UUID.fromString(args[2]));
             java.util.LinkedList<Comments> Comments = p.getComments(args[2]);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/UserPics.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("UserPics.jsp");
             
             request.setAttribute("Pic",pic);
             request.setAttribute("Comment",Comments);
