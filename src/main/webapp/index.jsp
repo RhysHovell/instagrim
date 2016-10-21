@@ -41,7 +41,7 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
-                     <a class="navbar-brand" href="index.jsp">Instagrim</a>
+                     <a class="navbar-brand">Instagrim</a>
                  </div>
                      <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
@@ -56,7 +56,6 @@
                                     if (lg.getLoggedin()) {
                             %>
                             <li><a href="Profile">Profile</a></li>
-                            <li><a href="upload.jsp">Upload</a></li>
                             <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <li><a href="Logout">Logout</a></li>
                             <%}

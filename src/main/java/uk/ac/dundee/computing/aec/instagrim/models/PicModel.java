@@ -143,8 +143,8 @@ public class PicModel {
         {
            UUID commentID = UUID.randomUUID();
            Session session = cluster.connect("instagrim");
-           Date dateAdded =  new Date();
-           String cqlQuery = ("insert into commentlist(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)");
+           Date dateAdded = new Date();
+           String cqlQuery = ("insert into commentlist(commentid,picid,user,comment,commenttime) Values(?,?,?,?)");
            PreparedStatement ps = session.prepare(cqlQuery);
            BoundStatement bs = new BoundStatement(ps);
            session.execute(bs.bind(commentID,picid,user,comment,dateAdded));
