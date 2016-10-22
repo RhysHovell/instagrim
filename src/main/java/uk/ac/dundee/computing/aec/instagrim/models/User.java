@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.stores.*;
 
 /**
@@ -83,7 +84,8 @@ public class User {
         return lsProfile;
     }
     public java.util.LinkedList<ProfileBean> searchAll(){
-
+        
+        cluster = CassandraHosts.getCluster();
         Session session = cluster.connect("instagrim");
         
         LinkedList<ProfileBean> profileBeanList = new LinkedList();

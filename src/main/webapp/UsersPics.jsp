@@ -85,9 +85,10 @@
                 
                if(c.getPicID().toString().equals(p.getSUUID())){
                 
+
                     %>
                     
-                    <p>user:<%=c.getCommentID()%></p>
+                    
                     <p>user:<%=c.getUser()%></p>
                     <p>comment<%=c.getComment()%></p>
                     <p>date<%=c.getDate()%></p>
@@ -98,8 +99,11 @@
 }
 }
 }
-
+}
 %>
 
     </body>
 </html>
+
+
+

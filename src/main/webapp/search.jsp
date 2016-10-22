@@ -67,8 +67,9 @@
             <input type ="submit" value="Search">
             
         </form>
+        
+        <h1>View All Users</h1>
         <a class="btn btn-default" onclick ="ajax();" role ="button">View data &raquo;</a>
         <div id ="ajaxoutput"></div>
-        <h1>View All Users</h1>
     </body>
 </html>

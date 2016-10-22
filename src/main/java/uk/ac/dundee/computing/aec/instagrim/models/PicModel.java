@@ -139,16 +139,15 @@ public class PicModel {
             System.out.println("Error --> " + ex);
             }
     }
-    public void insertComment(java.util.UUID picid, String user, String comment)
+    public void insertComment(UUID picid, String user, String comment)
         {
-           System.out.println("Comment" + comment);
-           UUID commentID = UUID.randomUUID();
+           cluster = CassandraHosts.getCluster();
            Session session = cluster.connect("instagrim");
-           //Date commenttime = new Date();
-           String cqlQuery = ("insert into commenttable(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)");
+           Date commenttime = new Date();
+           String cqlQuery = "insert into commenttable(picid,user,comment,commenttime) Values(?,?,?,?)";
            PreparedStatement ps = session.prepare(cqlQuery);
            BoundStatement bs = new BoundStatement(ps);
-           session.execute(bs.bind(commentID,picid,user,comment));
+           session.execute(bs.bind(picid,user,comment,commenttime));
            session.close();
   
     }

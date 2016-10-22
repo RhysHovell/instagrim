@@ -8,7 +8,6 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -31,13 +30,14 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
  */
 @WebServlet(name = "Comment", urlPatterns = {"/Comment"})
 public class Comment extends HttpServlet {
-    
-       Cluster cluster = null;
-    
-        public void init(ServletConfig config) throws ServletException {
+
+    Cluster cluster = null;
+
+    public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,7 +55,7 @@ public class Comment extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Comment</title>");            
+            out.println("<title>Servlet Comment</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Comment at " + request.getContextPath() + "</h1>");
@@ -77,22 +77,20 @@ public class Comment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-            String args[] = Convertors.SplitRequestPath(request);
-            PicModel pmcomment = new PicModel();
-            pmcomment.setCluster(cluster);
-            
-            Pic pic = pmcomment.getPic(Convertors.DISPLAY_PROCESSED,java.util.UUID.fromString(args[2]));
-            java.util.LinkedList<Comments> Comments = pmcomment.getComments(args[2]);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("UsersPics.jsp");
-            
-            request.setAttribute("Pics",pic);
-            request.setAttribute("Comments",Comments);
-            rd.forward(request,response);
-                    
+        String args[] = Convertors.SplitRequestPath(request);
+        PicModel pmcomment = new PicModel();
+        pmcomment.setCluster(cluster);
+
+        Pic pic = pmcomment.getPic(Convertors.DISPLAY_PROCESSED, java.util.UUID.fromString(args[2]));
+        java.util.LinkedList<Comments> Comments = pmcomment.getComments(args[2]);
+
+        RequestDispatcher rd = request.getRequestDispatcher("UsersPics.jsp");
+
+        request.setAttribute("Pics", pic);
+        request.setAttribute("Comments", Comments);
+        rd.forward(request, response);
+
     }
-       
- 
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -105,26 +103,20 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-            
-            String picId = request.getParameter("picid");
-            String comment = request.getParameter("comment");
+        PicModel pm = new PicModel();
+        pm.setCluster(cluster);
+        String picid = request.getParameter("picid");
+        String comment = request.getParameter("comment");
 
-            System.out.println("Comment" + comment);
-            HttpSession session = request.getSession();
-            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
-            String username = lg.getUsername();
-                if(lg.getLoggedin()){
-                    PicModel pm = new PicModel();
-                    pm.setCluster(cluster);
-                    System.out.print(comment);
-                    pm.insertComment(java.util.UUID.fromString(picId),username,comment);
-                }
-                response.sendRedirect("/Instagrim/Comments"+picId);
-        
+        System.out.println("Comment" + comment);
+        HttpSession session = request.getSession();
+        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        String username = lg.getUsername();
+
+        pm.insertComment(UUID.fromString(picid), username, comment);
+
+        response.sendRedirect("/Instagrim/Images/" + username);
     }
-        
-    
 
     /**
      * Returns a short description of the servlet.
