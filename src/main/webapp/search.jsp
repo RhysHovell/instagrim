@@ -26,7 +26,7 @@
                         document.getElementById("ajaxoutput").innerHTML = this.responseText;
                     }
                 };
-                xhttp.open("GET", "Search", true);
+                xhttp.open("GET", "SearchAll", true);
                 xhttp.send();
             }
             </script>

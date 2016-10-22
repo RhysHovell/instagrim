@@ -86,21 +86,7 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
-            User us = new User();
-            String output ="";
-            LinkedList<ProfileBean> profileBeanList = new LinkedList();
-            profileBeanList = us.searchAll();
-            for (int i=0;i<profileBeanList.size();i++)
-            {
-                    output="<p>"+ profileBeanList.get(i).getLogin() +"</p>";
-            }
-            response.getWriter().write(output);
-            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-            rd.forward(request,response);
-//        
+
 //            HttpSession session = request.getSession();
 //            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
 //            
