@@ -26,7 +26,7 @@
                          <span class="icon-bar"></span>
                      </button>
                  
-                     <a class="navbar-brand">Instagrim</a>
+                    <a class="navbar-brand"href="Profile">Instagrim</a>
                  </div>
            
                                           <%

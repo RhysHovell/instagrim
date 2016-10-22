@@ -39,12 +39,12 @@
                          <span class="icon-bar"></span>
                      </button>
                 
-                     <a class="navbar-brand">Instagrim</a>
+                     <a class="navbar-brand"href="Profile">Instagrim</a>
                  </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             <li><a href="/Instagrim/Profile">Profile</a></li>
-                            <li><a href="/Instagrim/upload.jsp">Upload</a></li>
+                            <li><a href="/Instagrim/Upload">Upload</a></li>
                             <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="/Instagrim/Logout">Logout</a></li>

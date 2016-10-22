@@ -74,6 +74,7 @@ public class User {
             for (Row row : rs){
                 ProfileBean profile = new ProfileBean();
                 profile.setLogin(row.getString("login"));
+                profile.setLogin(row.getString("first_name"));
                 lsProfile.add(profile);
             }
         }
@@ -82,7 +83,9 @@ public class User {
         return lsProfile;
     }
     public java.util.LinkedList<ProfileBean> searchAll(){
+
         Session session = cluster.connect("instagrim");
+        
         LinkedList<ProfileBean> profileBeanList = new LinkedList();
         
         

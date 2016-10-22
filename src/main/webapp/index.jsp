@@ -41,7 +41,7 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
-                     <a class="navbar-brand">Instagrim</a>
+                     <a class="navbar-brand"href="Profile">Instagrim</a>
                  </div>
                      <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
@@ -62,7 +62,7 @@
                                     }else{
                                         %>
                             
-                            <li><a href="Search"><span class="glyphicon glyphicon-search"></span></a></li>
+                            <li><a href="SearchAll"><span class="glyphicon glyphicon-search"></span></a></li>
                         </ul>
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Register">Register</a></li>

@@ -42,12 +42,12 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
-                     <a class="navbar-brand">Instagrim</a>
+                     <a class="navbar-brand" href="Profile">Instagrim</a>
                  </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             <li><a href="Profile">Profile</a></li>
-                             <li><a href="Upload">Profile</a></li>
+                             <li><a href="Upload">Upload</a></li>
                             <li><a href="Images/<%=lg.getUsername()%>">Your Images</a></li>
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="Logout">Logout</a></li>
@@ -62,15 +62,16 @@
         <li>First Name:<%=profile.getFirstName()%></li>
         <li>Surname:<%=profile.getLastName()%></li>
         <li>Email:<%=profile.getEmail()%></li>
+     </ul>
         <%
             Pic p = (Pic) request.getAttribute("ProfilePic");
-            if (p == null) {
+ 
         %>
         <img id="profilePicture" class="thumbnail" alt="User profile picture" src="/Instagrim/displayProfilePicture">
         <li><a href="EditProfile">Edit Profile</a></li>
-       </ul>
+       
         <%
-        } else {
+
               
         %>
                    
@@ -83,7 +84,7 @@
 
         <%  
         }
-}
+
         %>
     </body>
 </html>

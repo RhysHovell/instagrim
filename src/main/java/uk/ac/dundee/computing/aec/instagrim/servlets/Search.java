@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import com.datastax.driver.core.Cluster;
+import java.util.LinkedList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
 
 
 /**
  *
  * @author rhysh
  */
-@WebServlet(name = "Search", urlPatterns = {"/Search"})
+@WebServlet(name = "Search", urlPatterns = {"/SearchAll"})
 public class Search extends HttpServlet {
     
     Cluster cluster = null;
@@ -69,6 +74,19 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
+            User us = new User();
+            String output ="";
+            LinkedList<ProfileBean> profileBeanList = new LinkedList();
+            profileBeanList = us.searchAll();
+            for (int i=0;i<profileBeanList.size();i++)
+            {
+                    output="<p>"+profileBeanList.get(i).getLogin() +"</p>";
+            }
+            response.getWriter().write(output);
+            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+            rd.forward(request,response);
+  
             
     }
 

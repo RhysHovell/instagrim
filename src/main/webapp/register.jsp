@@ -17,15 +17,23 @@
 		{
                         document.getElementById("output").innerHTML = "";
 			
-			var firstnameValue = document.forms["registerform"]["first_name"].value;
-			
-			if (firstnameValue == ""){
+			var usernameValue = document.forms["registerform"]["login"].value;
+			var passwordValue = document.forms["registerform"]["password"].value;
+			if (usernameValue == ""){
 				
-                               document.getElementById("output").innerHTML = "Error";
+                               document.getElementById("output").innerHTML = "Error username cannot be blank";
                                return false;
                             }else{
 				return true;
                             }
+                            if (passwordValue == ""){
+				
+                               document.getElementById("output").innerHTML = "Error password cannot be blank";
+                               return false;
+                            }else{
+				return true;
+                            }
+                            
 		}	
                 </script>
                 
@@ -54,37 +62,6 @@
                  </div>
 
         </nav>
-
-	
-
-       		
-              
-
-
-<!--AJAX SCRIPT-->
-<script>
-function loadDoc() {
-  var xhttp;
-  if (window.XMLHttpRequest) {
-    // code for modern browsers
-    xhttp = new XMLHttpRequest();
-    } else {
-    // code for IE6, IE5
-    xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "Register", true);
-  xhttp.send();
-}
-</script>
-
-	
-
-
             <h3>Register as user</h3>
          
             <form name="registerform" method="POST"  action="Register" onsubmit="return validateForm()">
