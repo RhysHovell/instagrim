@@ -68,11 +68,11 @@
         %>
                     <h1>Your Pics</h1>
         <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/>
-        <form method ="POST" action="/Instagrim/Comment">
+        <form method ="POST" enctype="multipart/form-data" action="/Instagrim/Comment">
             <input type ="text" name="username" value="<%=lg.getUsername()%>" hidden>
-            <input type ="text" name="picid" value="<%=p.getSUUID()%>" hidden>
-            <input type ="text" name="comment" value ="comment">
-            <input type ="submit" value="Submit">
+            <input type ="text" name="picid" value="<%=p.getSUUID()%>" hidden>          
+            <input type ="text" name="comment" value ="">
+            <input type ="submit" value="Submit" id="comment">
         </form>
 
         <%
@@ -83,17 +83,14 @@
             while (itComment.hasNext()) {
                 Comments c = (Comments) itComment.next();
                 
-                if(c.getPicID().toString().equals(p.getSUUID())){
-                    String user = c.getUser();
-                    String comment = c.getComment();
-                    Date date = c.getDate();
-                }
+               if(c.getPicID().toString().equals(p.getSUUID())){
+                
                     %>
                     
-                    
-                    <p>user</p>
-                    <p>comment</p>
-                    <p>date</p>
+                    <p>user:<%=c.getCommentID()%></p>
+                    <p>user:<%=c.getUser()%></p>
+                    <p>comment<%=c.getComment()%></p>
+                    <p>date<%=c.getDate()%></p>
                     
                     
                           <%
@@ -101,7 +98,8 @@
 }
 }
 }
+
 %>
-        </article>
+
     </body>
 </html>

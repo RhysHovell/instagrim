@@ -57,7 +57,7 @@ public class User {
 
         return true;
     }
-     java.util.LinkedList<ProfileBean> searchUser(String username){
+     public java.util.LinkedList<ProfileBean> searchUser(String username){
         java.util.LinkedList<ProfileBean> lsProfile = new LinkedList<>();
         
         Session session = cluster.connect("instagrim");

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import com.datastax.driver.core.Cluster;
+import java.util.HashMap;
 import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -28,13 +29,24 @@ import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
  *
  * @author rhysh
  */
-@WebServlet(name = "Search", urlPatterns = {"/SearchAll"})
+@WebServlet(name = "Search", urlPatterns = {"/Search","/SearchAll"})
 public class Search extends HttpServlet {
     
     Cluster cluster = null;
+    private HashMap CommandsMap = new HashMap();
 
     public void init(ServletConfig config){
         cluster = CassandraHosts.getCluster();
+    }
+    public Search()
+    {
+        super();
+        
+        CommandsMap.put("Search",1);
+        CommandsMap.put("SearchAll",2);
+        
+        
+        
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,7 +86,44 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+            HttpSession session = request.getSession();
+            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
             
+            if (lg == null)
+            {
+                RequestDispatcher rd = request.getRequestDispatcher("error-404.jsp");
+                rd.forward(request,response);
+            }
+            else
+            {
+                String args[] = Convertors.SplitRequestPath(request);
+                
+                int command;
+                try {
+                    command = (Integer) CommandsMap.get(args[1]);
+                    
+                } catch (Exception et) {
+                    return;
+                }
+                switch (command) 
+                 {
+                case 1:
+                    RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+                    rd.forward(request, response);
+                    break;
+                case 2:
+                    break;
+                }
+            }
+            
+ }      
+            
+            
+            
+ public void searchAll(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+ 
             User us = new User();
             String output ="";
             LinkedList<ProfileBean> profileBeanList = new LinkedList();
@@ -88,8 +137,19 @@ public class Search extends HttpServlet {
             rd.forward(request,response);
   
             
-    }
+}
 
+ public void searchUser(String user, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+     
+            User us = new User();
+            us.setCluster(cluster);
+            
+            java.util.LinkedList<ProfileBean> lsSearchedProfile = us.searchUser(user);
+            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+            request.setAttribute("searchUser", lsSearchedProfile);
+            rd.forward(request,response);
+ }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -98,25 +158,35 @@ public class Search extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-            
-            String search = request.getParameter("searchUser");
-            
-            if (search == null){
-                response.sendRedirect("index.jsp"); //If search fails return to home screen
-            }
-            else{
             User us = new User();
             us.setCluster(cluster);
-            boolean valid = us.userValid(search);
-            HttpSession session = request.getSession();
+            String search = request.getParameter("searchUser");
             
-            
+            String args[] = Convertors.SplitRequestPath(request);
+            int command;
+            try {
+            command = (Integer) CommandsMap.get(args[1]);
+                } catch (Exception et) {
+                    error("Bad Operator", response);
+                    return;
+                }
+                switch (command) {
+                    case 1:
+                        
+                        searchUser(search,request,response);
+                        break;
+                    case 2:
+                        searchAll(request,response);
+                        break;
+                    default:
+                        error("Bad Operator", response);
+                }
             }
-    }
+ 
+    
 
     /**
      * Returns a short description of the servlet.
@@ -128,4 +198,14 @@ public class Search extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+
+
+    private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
+
+        PrintWriter out = null;
+        out = new PrintWriter(response.getOutputStream());
+        out.println("<h1>You have an error in your input</h1>");
+        out.println("<h2>" + mess + "</h2>");
+        out.close();
+    }
 }

@@ -77,7 +77,7 @@ public class PicModel {
             PreparedStatement psProfilePic = session.prepare(cqlQuery);
             BoundStatement bsProfilePic = new BoundStatement(psProfilePic);
             
-            session.execute(bsProfilePic.bind(picid, user));
+            session.execute(bsProfilePic.bind(picid, buffer, thumbbuf, user, length, thumblength, type, name));
             session.close();
         }
             catch (IOException ex) {
@@ -88,7 +88,7 @@ public class PicModel {
         java.util.LinkedList<Comments> CommentList = new java.util.LinkedList<>();
         Session session = cluster.connect("instagrim");
         
-        String cqlQuery = "select * from commentlist where picid =?";
+        String cqlQuery = "select * from commenttable where picid =?";
         PreparedStatement ps = session.prepare(cqlQuery);
         BoundStatement bs = new BoundStatement(ps);
         ResultSet rs = session.execute(bs.bind(UUID.fromString(picid)));
@@ -141,13 +141,14 @@ public class PicModel {
     }
     public void insertComment(java.util.UUID picid, String user, String comment)
         {
+           System.out.println("Comment" + comment);
            UUID commentID = UUID.randomUUID();
            Session session = cluster.connect("instagrim");
-           Date dateAdded = new Date();
-           String cqlQuery = ("insert into commentlist(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)");
+           //Date commenttime = new Date();
+           String cqlQuery = ("insert into commenttable(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)");
            PreparedStatement ps = session.prepare(cqlQuery);
            BoundStatement bs = new BoundStatement(ps);
-           session.execute(bs.bind(commentID,picid,user,comment,dateAdded));
+           session.execute(bs.bind(commentID,picid,user,comment));
            session.close();
   
     }
@@ -263,6 +264,7 @@ public class PicModel {
         ByteBuffer bImage = null;
         String type = null;
         int length = 0;
+        String user = null;
         try {
             Convertors convertor = new Convertors();
             ResultSet rs = null;
@@ -274,7 +276,7 @@ public class PicModel {
             } else if (image_type == Convertors.DISPLAY_THUMB) {
                 ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
             } else if (image_type == Convertors.DISPLAY_PROCESSED) {
-                ps = session.prepare("select processed,processedlength,type from pics where picid =?");
+                ps = session.prepare("select processed,processedlength,type,user from pics where picid =?");
             }
             BoundStatement boundStatement = new BoundStatement(ps);
             rs = session.execute( // this is where the query is executed
@@ -296,6 +298,7 @@ public class PicModel {
                     } else if (image_type == Convertors.DISPLAY_PROCESSED) {
                         bImage = row.getBytes("processed");
                         length = row.getInt("processedlength");
+                        user = row.getString("user");
                     }
                     
                     type = row.getString("type");
@@ -309,6 +312,8 @@ public class PicModel {
         session.close();
         Pic p = new Pic();
         p.setPic(bImage, length, type);
+        p.setUUID(picid);
+        p.setUser(user);
 
         return p;
 

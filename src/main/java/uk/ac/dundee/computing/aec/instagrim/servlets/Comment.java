@@ -8,6 +8,7 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -75,22 +76,20 @@ public class Comment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
             String args[] = Convertors.SplitRequestPath(request);
-            PicModel p = new PicModel();
-            p.setCluster(cluster);
+            PicModel pmcomment = new PicModel();
+            pmcomment.setCluster(cluster);
             
-            Pic pic = p.getPic(Convertors.DISPLAY_PROCESSED,UUID.fromString(args[2]));
-            java.util.LinkedList<Comments> Comments = p.getComments(args[2]);
+            Pic pic = pmcomment.getPic(Convertors.DISPLAY_PROCESSED,java.util.UUID.fromString(args[2]));
+            java.util.LinkedList<Comments> Comments = pmcomment.getComments(args[2]);
             
-            RequestDispatcher rd = request.getRequestDispatcher("UserPics.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("UsersPics.jsp");
             
-            request.setAttribute("Pic",pic);
-            request.setAttribute("Comment",Comments);
+            request.setAttribute("Pics",pic);
+            request.setAttribute("Comments",Comments);
             rd.forward(request,response);
                     
-            
-            
     }
        
  
@@ -106,10 +105,11 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            String picid = request.getParameter("picid");
-            String comment = request.getParameter("comment");
+ 
             
+            String picId = request.getParameter("picid");
+            String comment = request.getParameter("comment");
+
             System.out.println("Comment" + comment);
             HttpSession session = request.getSession();
             LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
@@ -118,8 +118,9 @@ public class Comment extends HttpServlet {
                     PicModel pm = new PicModel();
                     pm.setCluster(cluster);
                     System.out.print(comment);
-                    pm.insertComment(java.util.UUID.fromString(picid),username,comment);
+                    pm.insertComment(java.util.UUID.fromString(picId),username,comment);
                 }
+                response.sendRedirect("/Instagrim/Comments"+picId);
         
     }
         

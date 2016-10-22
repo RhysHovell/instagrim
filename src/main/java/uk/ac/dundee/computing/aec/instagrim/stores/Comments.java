@@ -18,7 +18,7 @@ public class Comments {
     private String comment = null;
     private Date date = null;
     
-    public String getcommentID(){
+    public String getCommentID(){
         return commentID.toString();
     }
     public void setCommentID(UUID commentID){
