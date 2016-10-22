@@ -87,35 +87,49 @@ public class Search extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            HttpSession session = request.getSession();
-            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
-            
-            if (lg == null)
+        
+        
+            User us = new User();
+            String output ="";
+            LinkedList<ProfileBean> profileBeanList = new LinkedList();
+            profileBeanList = us.searchAll();
+            for (int i=0;i<profileBeanList.size();i++)
             {
-                RequestDispatcher rd = request.getRequestDispatcher("error-404.jsp");
-                rd.forward(request,response);
+                    output="<p>"+ profileBeanList.get(i).getLogin() +"</p>";
             }
-            else
-            {
-                String args[] = Convertors.SplitRequestPath(request);
-                
-                int command;
-                try {
-                    command = (Integer) CommandsMap.get(args[1]);
-                    
-                } catch (Exception et) {
-                    return;
-                }
-                switch (command) 
-                 {
-                case 1:
-                    RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-                    rd.forward(request, response);
-                    break;
-                case 2:
-                    break;
-                }
-            }
+            response.getWriter().write(output);
+            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+            rd.forward(request,response);
+//        
+//            HttpSession session = request.getSession();
+//            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+//            
+//            if (lg == null)
+//            {
+//                RequestDispatcher rd = request.getRequestDispatcher("error-404.jsp");
+//                rd.forward(request,response);
+//            }
+//            else
+//            {
+//                String args[] = Convertors.SplitRequestPath(request);
+//                
+//                int command;
+//                try {
+//                    command = (Integer) CommandsMap.get(args[1]);
+//                    
+//                } catch (Exception et) {
+//                    return;
+//                }
+//                switch (command) 
+//                 {
+//                case 1:
+//                    RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+//                    rd.forward(request, response);
+//                    break;
+//                case 2:
+//                    break;
+//                }
+//            }
             
  }      
             
@@ -124,17 +138,6 @@ public class Search extends HttpServlet {
  public void searchAll(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
  
-            User us = new User();
-            String output ="";
-            LinkedList<ProfileBean> profileBeanList = new LinkedList();
-            profileBeanList = us.searchAll();
-            for (int i=0;i<profileBeanList.size();i++)
-            {
-                    output="<p>"+profileBeanList.get(i).getLogin() +"</p>";
-            }
-            response.getWriter().write(output);
-            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-            rd.forward(request,response);
   
             
 }

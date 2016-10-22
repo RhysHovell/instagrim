@@ -26,7 +26,7 @@
                         document.getElementById("ajaxoutput").innerHTML = this.responseText;
                     }
                 };
-                xhttp.open("GET", "SearchAll", true);
+                xhttp.open("GET", "Search", true);
                 xhttp.send();
             }
             </script>
@@ -69,7 +69,7 @@
         </form>
         
         <h1>View All Users</h1>
-        <a class="btn btn-default" onclick ="ajax();" role ="button">View data &raquo;</a>
+        <a class="btn btn-default" onclick ="ajax();" role ="button">View data</a>
         <div id ="ajaxoutput"></div>
     </body>
 </html>
