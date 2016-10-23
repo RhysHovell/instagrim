@@ -143,11 +143,12 @@ public class PicModel {
         {
            cluster = CassandraHosts.getCluster();
            Session session = cluster.connect("instagrim");
+           UUID commentid = UUID.randomUUID();
            Date commenttime = new Date();
-           String cqlQuery = "insert into commenttable(picid,user,comment,commenttime) Values(?,?,?,?)";
+           String cqlQuery = "insert into commentlist(commentid,picid,user,comment,commenttime) Values(?,?,?,?,?)";
            PreparedStatement ps = session.prepare(cqlQuery);
            BoundStatement bs = new BoundStatement(ps);
-           session.execute(bs.bind(picid,user,comment,commenttime));
+           session.execute(bs.bind(commentid,picid,user,comment,commenttime));
            session.close();
   
     }

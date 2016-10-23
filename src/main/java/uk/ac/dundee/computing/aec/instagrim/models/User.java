@@ -101,11 +101,12 @@ public class User {
         }
         else
         {
-            for (Row row : rs){
-            ProfileBean profile = new ProfileBean();
-            profile.setLogin(row.getString("login"));
-            profileBeanList.add(profile);    
-        }
+            for (Row row : rs)
+            {
+                ProfileBean profile = new ProfileBean();
+                profile.setLogin(row.getString("login"));
+                profileBeanList.add(profile);    
+            }
             
         }
         session.close();

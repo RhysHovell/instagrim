@@ -81,10 +81,10 @@ public class Comment extends HttpServlet {
         PicModel pmcomment = new PicModel();
         pmcomment.setCluster(cluster);
 
-        Pic pic = pmcomment.getPic(Convertors.DISPLAY_PROCESSED, java.util.UUID.fromString(args[2]));
+        Pic pic = pmcomment.getPic(Convertors.DISPLAY_PROCESSED, UUID.fromString(args[2]));
         java.util.LinkedList<Comments> Comments = pmcomment.getComments(args[2]);
 
-        RequestDispatcher rd = request.getRequestDispatcher("UsersPics.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/UsersPics.jsp");
 
         request.setAttribute("Pics", pic);
         request.setAttribute("Comments", Comments);

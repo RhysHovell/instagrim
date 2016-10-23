@@ -55,7 +55,7 @@
         </nav>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-            java.util.LinkedList<Comments> lsComments = (java.util.LinkedList<Comments>) request.getAttribute("Comments");
+            
             if (lsPics == null) {
         %>
         <p>No Pictures found</p>
@@ -68,14 +68,14 @@
         %>
                     <h1>Your Pics</h1>
         <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/>
-        <form method ="POST" enctype="multipart/form-data" action="/Instagrim/Comment">
-            <input type ="text" name="username" value="<%=lg.getUsername()%>" hidden>
-            <input type ="text" name="picid" value="<%=p.getSUUID()%>" hidden>          
+        <form method ="POST" action="/Instagrim/Comment">
+            <input type ="text" name="username" value="<%=lg.getUsername()%>">
+            <input type ="text" name="picid" value="<%=p.getSUUID()%>">          
             <input type ="text" name="comment" value ="">
             <input type ="submit" value="Submit" id="comment">
         </form>
 
-        <%
+        <%java.util.LinkedList<Comments> lsComments = (java.util.LinkedList<Comments>) request.getAttribute("Comments");
             if (lsComments == null) {
         } else {
             Iterator<Comments> itComment;

@@ -63,19 +63,23 @@ public class SearchAll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                
-        
+            
         
             User us = new User();
             String output ="";
             LinkedList<ProfileBean> profileBeanList = new LinkedList();
             profileBeanList = us.searchAll();
+            output += "<ul>";
             for (int i=0;i<profileBeanList.size();i++)
             {
-                    output="<p>"+ profileBeanList.get(i).getLogin() +"</p>";
+                    output+="<li>"
+                            + "<a href=\"/Instagrim/Images/" + profileBeanList.get(i).getLogin() + "\">"+ profileBeanList.get(i).getLogin() +"</a>"
+                            + "</li>";
             }
+            output += "</ul>";
             response.getWriter().write(output);
-            RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-            rd.forward(request,response);
+           // RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+           // rd.forward(request,response);
 //        
     }
 

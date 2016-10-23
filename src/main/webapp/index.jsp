@@ -75,6 +75,13 @@
             </div>
 
         </nav>
+                 
+        <container>
+            
+            <img src="img/house.jpg"/>
+            
+        </container>
+                 
         <footer>
         </footer>
     </body>

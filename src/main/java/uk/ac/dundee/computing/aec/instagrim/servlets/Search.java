@@ -29,7 +29,7 @@ import uk.ac.dundee.computing.aec.instagrim.stores.ProfileBean;
  *
  * @author rhysh
  */
-@WebServlet(name = "Search", urlPatterns = {"/Search","/SearchAll"})
+@WebServlet(name = "Search", urlPatterns = {"/Search"})
 public class Search extends HttpServlet {
     
     Cluster cluster = null;
@@ -109,8 +109,8 @@ public class Search extends HttpServlet {
 //                switch (command) 
 //                 {
 //                case 1:
-//                    RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-//                    rd.forward(request, response);
+                    RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+                    rd.forward(request, response);
 //                    break;
 //                case 2:
 //                    break;
